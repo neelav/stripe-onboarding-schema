@@ -4,6 +4,7 @@ class Field {
     id: String;
     description: String;
     fieldType: FieldType;
+    // Attributes specific to this field's type
     atrtibutes: Object;
 }
 
