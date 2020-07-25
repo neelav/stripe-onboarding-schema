@@ -1,11 +1,14 @@
 import FieldType from './FieldType';
 
 class Field {
-    id: String;
-    description: String;
+    id: string;
+
+    description: string;
+
     fieldType: FieldType;
+
     // Attributes specific to this field's type
-    atrtibutes: Object;
+    atrtibutes: Record<string, unknown>;
 }
 
 export default Field;
