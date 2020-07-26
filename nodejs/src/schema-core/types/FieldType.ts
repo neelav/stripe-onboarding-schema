@@ -2,7 +2,8 @@ enum FieldType {
     TEXT,
     BOOLEAN,
     DOCUMENT,
-    NUMBER
+    NUMBER,
+    ENUM
 }
 
 export default FieldType;
