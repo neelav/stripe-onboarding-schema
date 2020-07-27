@@ -4,14 +4,14 @@ import EnumAttributes from './types/EnumAttributes';
 type Attributes = EnumAttributes
 
 class Field {
-    id: string
+    readonly id: string
 
-    description: string
+    readonly description: string
 
-    fieldType: FieldType
+    readonly fieldType: FieldType
 
     // Attributes specific to this field's type
-    attributes?: Attributes
+    readonly attributes?: Attributes
 
     constructor(id: string, description: string, fieldType: FieldType, attributes: Attributes) {
       this.id = id;

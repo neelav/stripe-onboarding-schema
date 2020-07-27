@@ -1,3 +1,11 @@
 {
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "strict": true,
+        "target": "es6",
+        "lib": [
+            "es2019"
+        ] 
+    },
     "include": ["src"]
 }

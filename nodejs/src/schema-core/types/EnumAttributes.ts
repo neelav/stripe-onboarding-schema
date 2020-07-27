@@ -1,10 +1,10 @@
-type Value = {
-    value: string,
-    label: string
+interface Value {
+    readonly value: string,
+    readonly label: string
 }
 
 class EnumAttributes {
-    values: Value[]
+    readonly values: Value[]
 
     constructor(values: Value[]) {
       this.values = values;
