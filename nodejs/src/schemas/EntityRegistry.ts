@@ -1,42 +1,60 @@
 import Field from 'schema-core/Field';
 import Entity from 'schema-core/Entity';
+import AccountSchema from './AccountSchema';
 
 /**
  * This class exposes access to the underlying entities and fields.
  */
 class EntityRegistry {
-    readonly #entities: Entity[]
+    readonly #entityLookup: Map<string, Entity>
 
-    readonly #fieldLookup: Map<string, Field>
-
-    readonly #fieldToEntity: Map<Field, Entity>
+    readonly #entityLookupByPrefix: Map<string, Entity>
 
     constructor(entities: Entity[]) {
       EntityRegistry.validate(entities);
-      this.#entities = entities;
-      this.#fieldLookup = new Map(entities.flatMap((e) => e.fields).map((f) => [f.id, f]));
-      this.#fieldToEntity = new Map(
-        entities.flatMap((entity) => entity.fields.map((field) => [field, entity])),
+      this.#entityLookup = new Map(
+        entities.map((entity) => [entity.name, entity]),
+      );
+
+      this.#entityLookupByPrefix = new Map(
+        entities.map((entity) => [entity.entityPrefix, entity]),
       );
     }
 
     private static validate(entities: Entity[]): void {
-      const allFields = entities.flatMap((e) => e.fields).map((f) => f.id);
-      const duplicates = allFields.filter((id, index) => allFields.indexOf(id) !== index);
+      const allEntityNames = entities.map((e) => e.name);
+      this.raiseIfDuplicates(allEntityNames, 'entity names');
+      const allEntityPrefixes = entities.map((e) => e.entityPrefix);
+      this.raiseIfDuplicates(allEntityPrefixes, 'entity prefixes');
+    }
+
+    private static raiseIfDuplicates(items: string[], errorType: string): void {
+      const duplicates = items.filter((value, index) => items.indexOf(value) !== index);
       if (duplicates.length > 0) {
-        throw new Error(`Found duplicate field ids in entities: ${duplicates}`);
+        throw new Error(`Found duplicate ${errorType}: ${duplicates}`);
       }
     }
 
-    lookupField(fieldId: string): [Entity, Field] | undefined {
-      const field = this.#fieldLookup.get(fieldId);
-      if (!field) {
+    public static makeDefault(): EntityRegistry {
+      return new EntityRegistry([
+        AccountSchema,
+      ]);
+    }
+
+    lookupEntityByToken(token: string): string | undefined {
+      const prefix = token.split('_')[0];
+      return this.#entityLookupByPrefix.get(prefix)?.name;
+    }
+
+    lookupField(entityName: string, fieldId: string): [Entity, Field] | undefined {
+      const entity = this.#entityLookup.get(entityName);
+      if (!entity) {
         return undefined;
       }
 
-      const entity = this.#fieldToEntity.get(field);
-      if (!entity) {
-        throw new Error(`Cannot find field: ${field}`);
+      const field = entity.fields.find((f) => f.id === fieldId);
+      if (!field) {
+        return undefined;
       }
       return [entity, field];
     }
