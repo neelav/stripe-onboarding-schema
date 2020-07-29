@@ -41,12 +41,17 @@ class EntityRegistry {
       ]);
     }
 
+    /**
+     *
+     * @param token A valid stripe token (e.g. person_123abc) or a placeholder value used to denote
+     * a new entity needs to be created.
+     */
     lookupEntityByToken(token: string): string | undefined {
       const prefix = token.split('_')[0];
       return this.#entityLookupByPrefix.get(prefix)?.name;
     }
 
-    lookupField(entityName: string, fieldId: string): [Entity, Field] | undefined {
+    lookupField(entityName: string, fieldId: string): Field | undefined {
       const entity = this.#entityLookup.get(entityName);
       if (!entity) {
         return undefined;
@@ -56,7 +61,7 @@ class EntityRegistry {
       if (!field) {
         return undefined;
       }
-      return [entity, field];
+      return field;
     }
 }
 
