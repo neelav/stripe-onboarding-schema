@@ -1,5 +1,5 @@
 import EntityRegistry from 'schemas/EntityRegistry';
-import Stripe from 'stripe';
+import type Stripe from 'stripe';
 import { assertNever } from 'util/util';
 import Field from 'schema-core/Field';
 import OnboardingSchema from './OnboardingSchema';
@@ -41,7 +41,16 @@ class RequirementsConverter {
       }
 
       const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(r));
-      return new OnboardingSchema();
+      const fieldMap = requiredFields.reduce(
+        (map: Map<string, Field[]>, field: [string, Field]) => {
+          const list = map.get(field[0]) || [];
+          map.set(field[0], list);
+          list.push(field[1]);
+          return map;
+        },
+        new Map<string, Field[]>(),
+      );
+      return new OnboardingSchema(fieldMap);
     }
 
     private convertRequirement(requirementId: string): [string, Field] {
