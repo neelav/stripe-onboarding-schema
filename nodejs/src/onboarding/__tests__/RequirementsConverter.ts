@@ -1,11 +1,12 @@
-import EntityRegistry from 'schemas/EntityRegistry';
+import DefaultEntityRegistry, { EntityType } from 'schemas/DefaultEntityRegistry';
 import OnboardingSchema from 'onboarding/OnboardingSchema';
 import { notEmpty } from 'util/util';
 import Field from 'schema-core/Field';
+
 import RequirementsConverter from '../RequirementsConverter';
 
 test('basic schema', () => {
-  const registry = EntityRegistry.makeDefault();
+  const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
     {
@@ -21,12 +22,12 @@ test('basic schema', () => {
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
-    ['account', [notEmpty(registry.lookupField('account', 'business_type'))]],
+    [EntityType.ACCOUNT, [notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type'))]],
   ])));
 });
 
 test('unknown field', () => {
-  const registry = EntityRegistry.makeDefault();
+  const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
     {
@@ -42,7 +43,7 @@ test('unknown field', () => {
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
-    ['account', [notEmpty(registry.lookupField('account', 'business_type'))]],
-    ['__UNKNOWN__', [Field.unknown('unknown_field')]],
+    [EntityType.ACCOUNT, [notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type'))]],
+    [EntityType.UNKNOWN, [Field.unknown('unknown_field')]],
   ])));
 });

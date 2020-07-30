@@ -1,23 +1,21 @@
 import Field from 'schema-core/Field';
 import Entity from 'schema-core/Entity';
-import AccountSchema from './AccountSchema';
+import { notEmpty } from 'util/util';
 
 /**
  * This class exposes access to the underlying entities and fields.
  */
-class EntityRegistry {
-    readonly #entityLookup: Map<string, Entity>
+class EntityRegistry<E> {
+    readonly #entityLookup: Map<E, Entity>
 
     readonly #entityLookupByPrefix: Map<string, Entity>
 
-    constructor(entities: Entity[]) {
-      EntityRegistry.validate(entities);
-      this.#entityLookup = new Map(
-        entities.map((entity) => [entity.name, entity]),
-      );
+    constructor(entityLookup: Map<E, Entity>) {
+      EntityRegistry.validate(Array.from(entityLookup.values()));
+      this.#entityLookup = entityLookup;
 
       this.#entityLookupByPrefix = new Map(
-        entities.map((entity) => [entity.entityPrefix, entity]),
+        Array.from(entityLookup.values()).map((entity) => [entity.entityPrefix, entity]),
       );
     }
 
@@ -35,23 +33,25 @@ class EntityRegistry {
       }
     }
 
-    public static makeDefault(): EntityRegistry {
-      return new EntityRegistry([
-        AccountSchema,
-      ]);
-    }
-
     /**
      *
      * @param token A valid stripe token (e.g. person_123abc) or a placeholder value used to denote
      * a new entity needs to be created.
      */
-    lookupEntityByToken(token: string): string | undefined {
+    lookupEntityByToken(token: string): E | undefined {
       const prefix = token.split('_')[0];
-      return this.#entityLookupByPrefix.get(prefix)?.name;
+      const entity = this.#entityLookupByPrefix.get(prefix);
+
+      if (!entity) {
+        return undefined;
+      }
+
+      return notEmpty(
+        Array.from(this.#entityLookup.entries()).find((pair) => pair[1] === entity),
+      )[0];
     }
 
-    lookupField(entityName: string, fieldId: string): Field | undefined {
+    lookupField(entityName: E, fieldId: string): Field | undefined {
       const entity = this.#entityLookup.get(entityName);
       if (!entity) {
         return undefined;

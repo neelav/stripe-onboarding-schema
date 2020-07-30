@@ -1,4 +1,5 @@
 import Field from 'schema-core/Field';
+import { EntityType } from 'schemas/DefaultEntityRegistry';
 
 /**
  * Used inconjunction with RequirementsConverter to give richer metadata about the outstanding
@@ -6,9 +7,9 @@ import Field from 'schema-core/Field';
  * a UI form.
  */
 class OnboardingSchema {
-    readonly fieldMap: Map<string, Field[]>
+    readonly fieldMap: Map<EntityType, Field[]>
 
-    constructor(fieldMap: Map<string, Field[]>) {
+    constructor(fieldMap: Map<EntityType, Field[]>) {
       this.fieldMap = fieldMap;
     }
 }
