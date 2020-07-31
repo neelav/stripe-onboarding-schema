@@ -1,14 +1,19 @@
 {
     "compilerOptions": {
         "baseUrl": "./src",
+        "rootDir": "src",
         "strict": true,
         "target": "es6",
         "lib": [
             "es2019"
         ],
+        "moduleResolution": "node"
     },
     "include": [
         "src",
-        "node_modules"
+    ],
+    "exclude": [
+        "lib",
+        "src/**/__tests__/*"
     ]
 }
