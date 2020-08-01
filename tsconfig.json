@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "./src",
         "strict": true,
         "target": "es6",
         "lib": [
@@ -9,11 +8,9 @@
         "declaration": true,
         "module": "commonjs",
         "moduleResolution": "node",
-        "rootDir": "./src",
-        "outDir": "./dist"
     },
     "include": [
-        "src",
+        "src"
     ],
     "exclude": [
         "node_modules",

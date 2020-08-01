@@ -1,7 +1,7 @@
-import DefaultEntityRegistry, { EntityType } from 'schemas/DefaultEntityRegistry';
-import OnboardingSchema from 'onboarding/OnboardingSchema';
-import { notEmpty } from 'util/util';
-import Field from 'schema-core/Field';
+import DefaultEntityRegistry, { EntityType } from '../../schemas/DefaultEntityRegistry';
+import OnboardingSchema from '../OnboardingSchema';
+import { notEmpty } from '../../util/util';
+import Field from '../../schema-core/Field';
 
 import RequirementsConverter from '../RequirementsConverter';
 

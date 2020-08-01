@@ -1,7 +1,7 @@
 import type Stripe from 'stripe';
-import { assertNever } from 'util/util';
-import Field from 'schema-core/Field';
-import DefaultEntityRegistry, { EntityType } from 'schemas/DefaultEntityRegistry';
+import DefaultEntityRegistry, { EntityType } from '../schemas/DefaultEntityRegistry';
+import Field from '../schema-core/Field';
+import { assertNever } from '../util/util';
 import OnboardingSchema from './OnboardingSchema';
 
 /**
