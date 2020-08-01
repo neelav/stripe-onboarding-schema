@@ -8,6 +8,9 @@
     "build": "tsc"
   },
   "main": "src/index.ts",
+  "exports": {
+    "./": "./src/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neelav/stripe-onboarding-schema.git"
