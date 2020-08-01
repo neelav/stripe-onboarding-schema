@@ -3,8 +3,8 @@ import EntityRegistry from './EntityRegistry';
 import AccountSchema from './AccountSchema';
 
 enum EntityType {
-    ACCOUNT,
-    UNKNOWN
+    ACCOUNT = 'ACCOUNT',
+    UNKNOWN = 'UNKNOWN'
 }
 
 /**

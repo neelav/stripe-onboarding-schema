@@ -5,8 +5,8 @@ const EntityRegistry_1 = require("./EntityRegistry");
 const AccountSchema_1 = require("./AccountSchema");
 var EntityType;
 (function (EntityType) {
-    EntityType[EntityType["ACCOUNT"] = 0] = "ACCOUNT";
-    EntityType[EntityType["UNKNOWN"] = 1] = "UNKNOWN";
+    EntityType["ACCOUNT"] = "ACCOUNT";
+    EntityType["UNKNOWN"] = "UNKNOWN";
 })(EntityType || (EntityType = {}));
 exports.EntityType = EntityType;
 /**

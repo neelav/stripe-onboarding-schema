@@ -1,11 +1,11 @@
 enum FieldType {
-    TEXT,
-    BOOLEAN,
-    DOCUMENT,
-    NUMBER,
-    ENUM,
-    ADDRESS,
-    UNKNOWN
+    TEXT = 'TEXT',
+    BOOLEAN = 'BOOLEAN',
+    DOCUMENT = 'DOCUMENT',
+    NUMBER = 'NUMBER',
+    ENUM = 'ENUM',
+    ADDRESS = 'ADDRESS',
+    UNKNOWN = 'UNKNOWN'
 }
 
 export default FieldType;

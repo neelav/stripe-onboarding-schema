@@ -1,7 +1,7 @@
 import EntityRegistry from './EntityRegistry';
 declare enum EntityType {
-    ACCOUNT = 0,
-    UNKNOWN = 1
+    ACCOUNT = "ACCOUNT",
+    UNKNOWN = "UNKNOWN"
 }
 /**
  * This registry contains all the standard stripe entities that could be referenced
