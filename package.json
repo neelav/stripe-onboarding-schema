@@ -4,7 +4,8 @@
   "description": "Schema definition that maps Stripe requirements to a UI schema",
   "scripts": {
     "lint": "eslint . --ext .ts",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "main": "src/index.ts",
   "repository": {
