@@ -7,10 +7,7 @@
     "test": "jest",
     "build": "tsc"
   },
-  "main": "src/index.ts",
-  "exports": {
-    "./": "./src/"
-  },
+  "main": "dist/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neelav/stripe-onboarding-schema.git"
