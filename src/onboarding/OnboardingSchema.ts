@@ -1,5 +1,5 @@
-import Field from 'schema-core/Field';
-import { EntityType } from 'schemas/DefaultEntityRegistry';
+import Field from '../schema-core/Field';
+import { EntityType } from '../schemas/DefaultEntityRegistry';
 
 /**
  * Used inconjunction with RequirementsConverter to give richer metadata about the outstanding

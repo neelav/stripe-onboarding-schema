@@ -1,4 +1,4 @@
-import Field from 'schema-core/Field';
+import Field from './Field';
 
 /**
  * An Entity corresponds to a Stripe resource.  One can think of it as a database table.

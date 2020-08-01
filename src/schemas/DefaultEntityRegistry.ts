@@ -1,4 +1,4 @@
-import Entity from 'schema-core/Entity';
+import Entity from '../schema-core/Entity';
 import EntityRegistry from './EntityRegistry';
 import AccountSchema from './AccountSchema';
 

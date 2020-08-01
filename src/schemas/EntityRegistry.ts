@@ -1,6 +1,6 @@
-import Field from 'schema-core/Field';
-import Entity from 'schema-core/Entity';
-import { notEmpty } from 'util/util';
+import Field from '../schema-core/Field';
+import Entity from '../schema-core/Entity';
+import { notEmpty } from '../util/util';
 
 /**
  * This class exposes access to the underlying entities and fields.

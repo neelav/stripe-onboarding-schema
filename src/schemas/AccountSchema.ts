@@ -1,7 +1,7 @@
-import Entity from 'schema-core/Entity';
-import Field from 'schema-core/Field';
-import FieldType from 'schema-core/types/FieldType';
-import EnumAttributes from 'schema-core/types/EnumAttributes';
+import Entity from '../schema-core/Entity';
+import Field from '../schema-core/Field';
+import FieldType from '../schema-core/types/FieldType';
+import EnumAttributes from '../schema-core/types/EnumAttributes';
 
 const AccountSchema = new Entity(
   'account',
