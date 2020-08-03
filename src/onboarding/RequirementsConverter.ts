@@ -1,8 +1,8 @@
 import type Stripe from 'stripe';
 import DefaultEntityRegistry, { EntityType } from '../schemas/DefaultEntityRegistry';
 import Field from '../schema-core/Field';
-import { assertNever } from '../util/util';
 import OnboardingSchema from './OnboardingSchema';
+import { RequirementsType } from '../types/types';
 
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be
@@ -19,26 +19,9 @@ class RequirementsConverter {
 
     convertRequirements(
       requirements: Stripe.Account.Requirements,
-      include: 'past_due' | 'currently_due' | 'eventually_due',
+      include: RequirementsType,
     ): OnboardingSchema {
-      let desiredRequirements: string[] | null;
-      switch (include) {
-        case 'past_due': {
-          desiredRequirements = requirements.past_due;
-          break;
-        }
-        case 'currently_due': {
-          desiredRequirements = requirements.currently_due;
-          break;
-        }
-        case 'eventually_due': {
-          desiredRequirements = requirements.eventually_due;
-          break;
-        }
-        default: {
-          assertNever(include);
-        }
-      }
+      const desiredRequirements = requirements[include];
 
       const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(r));
       const fieldMap = requiredFields.reduce(

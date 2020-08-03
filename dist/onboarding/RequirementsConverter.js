@@ -16,7 +16,6 @@ var _entityRegistry;
 Object.defineProperty(exports, "__esModule", { value: true });
 const DefaultEntityRegistry_1 = require("../schemas/DefaultEntityRegistry");
 const Field_1 = require("../schema-core/Field");
-const util_1 = require("../util/util");
 const OnboardingSchema_1 = require("./OnboardingSchema");
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be
@@ -28,24 +27,7 @@ class RequirementsConverter {
         __classPrivateFieldSet(this, _entityRegistry, entityRegistry);
     }
     convertRequirements(requirements, include) {
-        let desiredRequirements;
-        switch (include) {
-            case 'past_due': {
-                desiredRequirements = requirements.past_due;
-                break;
-            }
-            case 'currently_due': {
-                desiredRequirements = requirements.currently_due;
-                break;
-            }
-            case 'eventually_due': {
-                desiredRequirements = requirements.eventually_due;
-                break;
-            }
-            default: {
-                util_1.assertNever(include);
-            }
-        }
+        const desiredRequirements = requirements[include];
         const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(r));
         const fieldMap = requiredFields.reduce((map, field) => {
             const list = map.get(field[0]) || [];

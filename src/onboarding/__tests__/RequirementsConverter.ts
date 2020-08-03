@@ -4,6 +4,7 @@ import { notEmpty } from '../../util/util';
 import Field from '../../schema-core/Field';
 
 import RequirementsConverter from '../RequirementsConverter';
+import { RequirementsType } from '../../types/types';
 
 test('basic schema', () => {
   const registry = DefaultEntityRegistry.make();
@@ -18,7 +19,7 @@ test('basic schema', () => {
       current_deadline: null,
       disabled_reason: 'past_due',
     },
-    'past_due',
+    RequirementsType.PAST_DUE,
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
@@ -39,7 +40,7 @@ test('unknown field', () => {
       current_deadline: null,
       disabled_reason: 'past_due',
     },
-    'past_due',
+    RequirementsType.PAST_DUE,
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
