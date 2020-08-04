@@ -14,9 +14,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 };
 var _entityRegistry;
 Object.defineProperty(exports, "__esModule", { value: true });
-const DefaultEntityRegistry_1 = require("../schemas/DefaultEntityRegistry");
 const Field_1 = require("../schema-core/Field");
 const OnboardingSchema_1 = require("./OnboardingSchema");
+const types_1 = require("../types/types");
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be
  * consumed by a rendering layer to render a form.
@@ -29,16 +29,16 @@ class RequirementsConverter {
     convertRequirements(requirements, include) {
         const desiredRequirements = requirements[include];
         const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(r));
-        const fieldMap = requiredFields.reduce((map, field) => {
-            const list = map.get(field[0]) || [];
-            map.set(field[0], list);
-            list.push(field[1]);
+        const fieldMap = requiredFields.reduce((map, requirement) => {
+            const list = map.get(requirement.entityType) || [];
+            map.set(requirement.entityType, list);
+            list.push(requirement);
             return map;
         }, new Map());
         return new OnboardingSchema_1.default(fieldMap);
     }
     convertRequirement(requirementId) {
-        const entityToken = requirementId.includes('.') && requirementId.split('.')[0];
+        let entityToken = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
         let entityName;
         if (entityToken) {
             entityName = __classPrivateFieldGet(this, _entityRegistry).lookupEntityByToken(entityToken);
@@ -46,10 +46,11 @@ class RequirementsConverter {
         const fieldId = entityName ? requirementId.substr(requirementId.indexOf('.')) : requirementId;
         const defaultedEntityName = entityName || RequirementsConverter.DEFAULT_ENTITY;
         const field = __classPrivateFieldGet(this, _entityRegistry).lookupField(defaultedEntityName, fieldId);
-        return field ? [defaultedEntityName, field]
-            : [entityName || DefaultEntityRegistry_1.EntityType.UNKNOWN, Field_1.default.unknown(requirementId)];
+        entityToken = entityName ? entityToken : undefined;
+        return field ? new types_1.Requirement(requirementId, defaultedEntityName, field, entityToken)
+            : new types_1.Requirement(requirementId, types_1.EntityType.UNKNOWN, Field_1.default.unknown(requirementId));
     }
 }
 _entityRegistry = new WeakMap();
-RequirementsConverter.DEFAULT_ENTITY = DefaultEntityRegistry_1.EntityType.ACCOUNT;
+RequirementsConverter.DEFAULT_ENTITY = types_1.EntityType.ACCOUNT;
 exports.default = RequirementsConverter;

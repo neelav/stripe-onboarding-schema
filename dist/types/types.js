@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Country = exports.RequirementsType = void 0;
+exports.Requirement = exports.Country = exports.RequirementsType = exports.EntityType = void 0;
+var EntityType;
+(function (EntityType) {
+    EntityType["ACCOUNT"] = "ACCOUNT";
+    EntityType["UNKNOWN"] = "UNKNOWN";
+})(EntityType = exports.EntityType || (exports.EntityType = {}));
 var RequirementsType;
 (function (RequirementsType) {
     RequirementsType["PAST_DUE"] = "past_due";
@@ -14,3 +19,12 @@ var Country;
     Country["GB"] = "GB";
     Country["FR"] = "FR";
 })(Country = exports.Country || (exports.Country = {}));
+class Requirement {
+    constructor(requirementId, entityType, field, entityToken) {
+        this.requirementId = requirementId;
+        this.entityType = entityType;
+        this.field = field;
+        this.entityToken = entityToken;
+    }
+}
+exports.Requirement = Requirement;

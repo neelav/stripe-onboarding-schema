@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const FieldType_1 = require("./types/FieldType");
+const FieldType_1 = require("./fieldtypes/FieldType");
 class Field {
     constructor(id, description, fieldType, attributes) {
         this.id = id;

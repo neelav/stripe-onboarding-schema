@@ -1,8 +1,5 @@
 import EntityRegistry from './EntityRegistry';
-declare enum EntityType {
-    ACCOUNT = "ACCOUNT",
-    UNKNOWN = "UNKNOWN"
-}
+import { EntityType } from '../types/types';
 /**
  * This registry contains all the standard stripe entities that could be referenced
  * by the requirements hash.
@@ -10,5 +7,4 @@ declare enum EntityType {
 declare class DefaultEntityRegistry extends EntityRegistry<EntityType> {
     static make(): DefaultEntityRegistry;
 }
-export { EntityType };
 export default DefaultEntityRegistry;

@@ -1,5 +1,5 @@
-import FieldType from './types/FieldType';
-import EnumAttributes from './types/EnumAttributes';
+import FieldType from './fieldtypes/FieldType';
+import EnumAttributes from './fieldtypes/EnumAttributes';
 declare type Attributes = EnumAttributes;
 declare class Field {
     readonly id: string;
