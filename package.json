@@ -5,9 +5,10 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "./deploy.sh"
   },
-  "main": "dist/index.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neelav/stripe-onboarding-schema.git"
