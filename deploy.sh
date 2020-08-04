@@ -10,6 +10,12 @@ fi
 
 RELEASE="release-$VERSION"
 
+TMPDIR=$(mktemp -d)
+cd $TMPDIR
+
+git clone git@github.com:neelav/stripe-onboarding-schema.git
+cd stripe-onboarding-schema
+
 git checkout master
 git checkout -b $RELEASE
 npm run build
