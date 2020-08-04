@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "./deploy.sh"
   },
   "main": "index.js",
   "repository": {
