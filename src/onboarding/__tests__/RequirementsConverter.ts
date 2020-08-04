@@ -4,7 +4,7 @@ import { notEmpty } from '../../util/util';
 import Field from '../../schema-core/Field';
 
 import RequirementsConverter from '../RequirementsConverter';
-import { RequirementsType, EntityType } from '../../types/types';
+import { RequirementsType, EntityType, Requirement } from '../../types/types';
 
 test('basic schema', () => {
   const registry = DefaultEntityRegistry.make();
@@ -23,7 +23,10 @@ test('basic schema', () => {
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
-    [EntityType.ACCOUNT, [notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type'))]],
+    [
+      EntityType.ACCOUNT,
+      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+    ],
   ])));
 });
 
@@ -44,7 +47,13 @@ test('unknown field', () => {
   );
 
   expect(schema).toEqual(new OnboardingSchema(new Map([
-    [EntityType.ACCOUNT, [notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type'))]],
-    [EntityType.UNKNOWN, [Field.unknown('unknown_field')]],
+    [
+      EntityType.ACCOUNT,
+      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+    ],
+    [
+      EntityType.UNKNOWN,
+      [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'))],
+    ],
   ])));
 });

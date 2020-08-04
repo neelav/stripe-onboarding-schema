@@ -1,3 +1,5 @@
+import Field from '../schema-core/Field';
+
 export enum EntityType {
     ACCOUNT = 'ACCOUNT',
     UNKNOWN = 'UNKNOWN'
@@ -14,4 +16,21 @@ export enum Country {
     CA = 'CA',
     GB = 'GB',
     FR = 'FR',
+}
+
+export class Requirement {
+    readonly requirementId: string;
+
+    readonly entityType: EntityType;
+
+    readonly entityToken?: string;
+
+    readonly field: Field;
+
+    constructor(requirementId: string, entityType: EntityType, field: Field, entityToken?: string) {
+      this.requirementId = requirementId;
+      this.entityType = entityType;
+      this.field = field;
+      this.entityToken = entityToken;
+    }
 }
