@@ -17,6 +17,8 @@ rm -rf src
 cp -R dist/ ./
 rm -rf dist
 
+echo "`jq '.main="index.js"' package.json`" > package.json
+npm --no-git-tag-version version "$VERSION"
 git add -A
 git commit -m "Deploying version $RELEASE"
 git push origin $RELEASE
