@@ -6,7 +6,7 @@
     "lint": "eslint . --ext .ts",
     "test": "jest",
     "build": "tsc",
-    "deploy": "./deploy.sh"
+    "deploy": "exec deploy.sh"
   },
   "repository": {
     "type": "git",
