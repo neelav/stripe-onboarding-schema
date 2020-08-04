@@ -14,10 +14,7 @@ git checkout master
 git checkout -b $RELEASE
 npm run build
 rm -rf src
-ROOT=pwd
-cd dist
-cp -R * $ROOT
-cd $ROOT
+cp -R dist/ ./
 rm -rf dist
 
 git add -A
