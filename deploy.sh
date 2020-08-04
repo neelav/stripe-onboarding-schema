@@ -21,7 +21,7 @@ else
     npm --no-git-tag-version version "$VERSION"
 fi
 
-VERSION=`jq '.version' package.json`
+VERSION=$(jq -r '.version' package.json)
 RELEASE="release-$VERSION"
 
 git checkout master
@@ -39,5 +39,5 @@ git commit -m "Deploying version $RELEASE"
 git push origin $RELEASE
 
 git checkout master
-npm version $VERSION
+npm version "$VERSION"
 git push origin master
