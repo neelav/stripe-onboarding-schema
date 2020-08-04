@@ -10,15 +10,17 @@ fi
 
 RELEASE="release-$VERSION"
 
+ROOT=$(pwd)
 TMPDIR=$(mktemp -d)
 cd $TMPDIR
 
 git clone git@github.com:neelav/stripe-onboarding-schema.git
 cd stripe-onboarding-schema
+cp -R "$ROOT"/node_modules .
 
 git checkout master
 git checkout -b $RELEASE
-npm install
+#npm install
 npm run build
 rm -rf src
 cp -R dist/ ./
