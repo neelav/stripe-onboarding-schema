@@ -18,6 +18,7 @@ cd stripe-onboarding-schema
 
 git checkout master
 git checkout -b $RELEASE
+npm install
 npm run build
 rm -rf src
 cp -R dist/ ./
