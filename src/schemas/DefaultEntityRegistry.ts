@@ -1,11 +1,7 @@
 import Entity from '../schema-core/Entity';
 import EntityRegistry from './EntityRegistry';
 import AccountSchema from './AccountSchema';
-
-enum EntityType {
-    ACCOUNT = 'ACCOUNT',
-    UNKNOWN = 'UNKNOWN'
-}
+import { EntityType } from '../types/types';
 
 /**
  * This registry contains all the standard stripe entities that could be referenced
@@ -19,5 +15,4 @@ class DefaultEntityRegistry extends EntityRegistry<EntityType> {
   }
 }
 
-export { EntityType };
 export default DefaultEntityRegistry;

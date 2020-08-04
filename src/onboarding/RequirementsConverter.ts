@@ -1,8 +1,8 @@
 import type Stripe from 'stripe';
-import DefaultEntityRegistry, { EntityType } from '../schemas/DefaultEntityRegistry';
+import DefaultEntityRegistry from '../schemas/DefaultEntityRegistry';
 import Field from '../schema-core/Field';
 import OnboardingSchema from './OnboardingSchema';
-import { RequirementsType } from '../types/types';
+import { RequirementsType, EntityType } from '../types/types';
 
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be

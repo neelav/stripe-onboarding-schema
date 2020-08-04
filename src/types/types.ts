@@ -1,3 +1,8 @@
+export enum EntityType {
+    ACCOUNT = 'ACCOUNT',
+    UNKNOWN = 'UNKNOWN'
+}
+
 export enum RequirementsType {
     PAST_DUE = 'past_due',
     CURRENTLY_DUE = 'currently_due',

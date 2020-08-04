@@ -1,10 +1,10 @@
-import DefaultEntityRegistry, { EntityType } from '../../schemas/DefaultEntityRegistry';
+import DefaultEntityRegistry from '../../schemas/DefaultEntityRegistry';
 import OnboardingSchema from '../OnboardingSchema';
 import { notEmpty } from '../../util/util';
 import Field from '../../schema-core/Field';
 
 import RequirementsConverter from '../RequirementsConverter';
-import { RequirementsType } from '../../types/types';
+import { RequirementsType, EntityType } from '../../types/types';
 
 test('basic schema', () => {
   const registry = DefaultEntityRegistry.make();

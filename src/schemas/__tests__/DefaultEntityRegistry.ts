@@ -1,4 +1,5 @@
-import DefaultEntityRegistry, { EntityType } from '../DefaultEntityRegistry';
+import DefaultEntityRegistry from '../DefaultEntityRegistry';
+import { EntityType } from '../../types/types';
 
 describe('DefaultEntityRegistry', () => {
   test('basic lookup', () => {

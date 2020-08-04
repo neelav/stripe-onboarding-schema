@@ -1,5 +1,5 @@
+import { EntityType } from '../types/types';
 import Field from '../schema-core/Field';
-import { EntityType } from '../schemas/DefaultEntityRegistry';
 
 /**
  * Used inconjunction with RequirementsConverter to give richer metadata about the outstanding
@@ -7,11 +7,11 @@ import { EntityType } from '../schemas/DefaultEntityRegistry';
  * a UI form.
  */
 class OnboardingSchema {
-    readonly fieldMap: Map<EntityType, Field[]>
+  readonly fieldMap: Map<EntityType, Field[]>;
 
-    constructor(fieldMap: Map<EntityType, Field[]>) {
-      this.fieldMap = fieldMap;
-    }
+  constructor(fieldMap: Map<EntityType, Field[]>) {
+    this.fieldMap = fieldMap;
+  }
 }
 
 export default OnboardingSchema;

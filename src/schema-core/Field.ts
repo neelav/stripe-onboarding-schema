@@ -1,5 +1,5 @@
-import FieldType from './types/FieldType';
-import EnumAttributes from './types/EnumAttributes';
+import FieldType from './fieldtypes/FieldType';
+import EnumAttributes from './fieldtypes/EnumAttributes';
 
 type Attributes = EnumAttributes
 
