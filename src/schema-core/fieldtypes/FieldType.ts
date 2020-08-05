@@ -5,6 +5,9 @@ enum FieldType {
     NUMBER = 'NUMBER',
     ENUM = 'ENUM',
     ADDRESS = 'ADDRESS',
+    URL = 'URL',
+    PHONE = 'PHONE',
+    EMAIL = 'EMAIL',
     UNKNOWN = 'UNKNOWN'
 }
 

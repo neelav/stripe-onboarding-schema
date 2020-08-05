@@ -1,10 +1,13 @@
 import FieldType from './fieldtypes/FieldType';
 import EnumAttributes from './fieldtypes/EnumAttributes';
+import TextAttributes from './fieldtypes/TextAttributes';
 
-type Attributes = EnumAttributes
+type Attributes = EnumAttributes | TextAttributes
 
 class Field {
     readonly id: string
+
+    readonly name: string
 
     readonly description: string
 
@@ -13,8 +16,15 @@ class Field {
     // Attributes specific to this field's type
     readonly attributes?: Attributes
 
-    constructor(id: string, description: string, fieldType: FieldType, attributes?: Attributes) {
+    constructor(
+      id: string,
+      name: string,
+      description: string,
+      fieldType: FieldType,
+      attributes?: Attributes,
+    ) {
       this.id = id;
+      this.name = name;
       this.description = description;
       this.fieldType = fieldType;
       this.attributes = attributes;
@@ -25,7 +35,7 @@ class Field {
      * resolved to a "real" field.
      */
     static unknown(id: string): Field {
-      return new Field(id, 'field id is not in the schema', FieldType.UNKNOWN, undefined);
+      return new Field(id, 'Unknown', 'field id is not in the schema', FieldType.UNKNOWN, undefined);
     }
 }
 
