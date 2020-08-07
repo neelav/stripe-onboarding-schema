@@ -12,9 +12,9 @@ class Entity<T> {
 
   readonly entityPrefix: string;
 
-  readonly fields: Field<T>[];
+  readonly fields: Field<T, unknown>[];
 
-  constructor(id: string, name: string, description: string, entityPrefix: string, fields: Field<T>[]) {
+  constructor(id: string, name: string, description: string, entityPrefix: string, fields: Field<T, unknown>[]) {
     this.id = id;
     this.name = name;
     this.description = description;

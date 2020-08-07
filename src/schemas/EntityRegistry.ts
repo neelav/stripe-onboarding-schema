@@ -51,7 +51,7 @@ class EntityRegistry<E> {
       )[0];
     }
 
-    lookupField(entityName: E, fieldId: string): Field<unknown> | undefined {
+    lookupField(entityName: E, fieldId: string): Field<unknown, unknown> | undefined {
       const entity = this.#entityLookup.get(entityName);
       if (!entity) {
         return undefined;
