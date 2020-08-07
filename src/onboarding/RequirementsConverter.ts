@@ -36,6 +36,14 @@ class RequirementsConverter {
       return new OnboardingSchema(fieldMap);
     }
 
+    static setValue<C, V>(field: Field<C, V>, container: C, value: V): void {
+      field.setValue(container, value);
+    }
+
+    static getValue<C, V>(field: Field<C, V>, container: C): V | null | undefined {
+      return field.getValue(container);
+    }
+
     private convertRequirement(requirementId: string): Requirement {
       let entityToken: string | undefined = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
       let entityName: EntityType | undefined;

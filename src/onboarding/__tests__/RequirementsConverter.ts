@@ -25,7 +25,13 @@ test('basic schema', () => {
   expect(schema).toEqual(new OnboardingSchema(new Map([
     [
       EntityType.ACCOUNT,
-      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+      [
+        new Requirement(
+          'business_type',
+          EntityType.ACCOUNT,
+          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+        ),
+      ],
     ],
   ])));
 });
@@ -49,11 +55,80 @@ test('unknown field', () => {
   expect(schema).toEqual(new OnboardingSchema(new Map([
     [
       EntityType.ACCOUNT,
-      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+      [
+        new Requirement(
+          'business_type',
+          EntityType.ACCOUNT,
+          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+        ),
+      ],
     ],
     [
       EntityType.UNKNOWN,
       [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'))],
     ],
   ])));
+});
+
+test('setValue', () => {
+  const registry = DefaultEntityRegistry.make();
+  const converter = new RequirementsConverter(registry);
+  const schema = converter.convertRequirements(
+    {
+      past_due: ['business_type'],
+      currently_due: ['business_type'],
+      eventually_due: ['business_type'],
+      pending_verification: [],
+      errors: [],
+      current_deadline: null,
+      disabled_reason: 'past_due',
+    },
+    RequirementsType.PAST_DUE,
+  );
+
+  const container = {};
+  RequirementsConverter.setValue(Array.from(schema.fieldMap.values())[0][0].field, container, 'company');
+  expect(container).toEqual({ business_type: 'company' });
+});
+
+test('getValue', () => {
+  const registry = DefaultEntityRegistry.make();
+  const converter = new RequirementsConverter(registry);
+  const schema = converter.convertRequirements(
+    {
+      past_due: ['business_type'],
+      currently_due: ['business_type'],
+      eventually_due: ['business_type'],
+      pending_verification: [],
+      errors: [],
+      current_deadline: null,
+      disabled_reason: 'past_due',
+    },
+    RequirementsType.PAST_DUE,
+  );
+
+  const container = { business_type: 'company' };
+  const value = RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
+  expect(value).toEqual('company');
+});
+
+test('getValue on unset field', () => {
+  const registry = DefaultEntityRegistry.make();
+  const converter = new RequirementsConverter(registry);
+  const schema = converter.convertRequirements(
+    {
+      past_due: ['business_type'],
+      currently_due: ['business_type'],
+      eventually_due: ['business_type'],
+      pending_verification: [],
+      errors: [],
+      current_deadline: null,
+      disabled_reason: 'past_due',
+    },
+    RequirementsType.PAST_DUE,
+  );
+
+  const container = {};
+  const value = RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
+  expect(value).toBeUndefined();
 });

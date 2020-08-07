@@ -6,11 +6,11 @@ import { notEmpty } from '../util/util';
  * This class exposes access to the underlying entities and fields.
  */
 class EntityRegistry<E> {
-    readonly #entityLookup: Map<E, Entity>
+    readonly #entityLookup: Map<E, Entity<unknown>>
 
-    readonly #entityLookupByPrefix: Map<string, Entity>
+    readonly #entityLookupByPrefix: Map<string, Entity<unknown>>
 
-    constructor(entityLookup: Map<E, Entity>) {
+    constructor(entityLookup: Map<E, Entity<unknown>>) {
       EntityRegistry.validate(Array.from(entityLookup.values()));
       this.#entityLookup = entityLookup;
 
@@ -19,7 +19,7 @@ class EntityRegistry<E> {
       );
     }
 
-    private static validate(entities: Entity[]): void {
+    private static validate(entities: Entity<unknown>[]): void {
       const allEntityNames = entities.map((e) => e.name);
       this.raiseIfDuplicates(allEntityNames, 'entity names');
       const allEntityPrefixes = entities.map((e) => e.entityPrefix);
@@ -51,7 +51,7 @@ class EntityRegistry<E> {
       )[0];
     }
 
-    lookupField(entityName: E, fieldId: string): Field | undefined {
+    lookupField(entityName: E, fieldId: string): Field<unknown> | undefined {
       const entity = this.#entityLookup.get(entityName);
       if (!entity) {
         return undefined;

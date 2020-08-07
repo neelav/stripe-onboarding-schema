@@ -6,7 +6,7 @@ describe('EntityRegistry', () => {
     const schema = new Entity('test', 'test', 'test', 'test', []);
     expect(
       () => new EntityRegistry<string>(
-        new Map<string, Entity>([
+        new Map<string, Entity<unknown>>([
           ['foo', schema],
           ['bar', schema],
         ]),
