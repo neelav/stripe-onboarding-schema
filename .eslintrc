@@ -29,6 +29,7 @@
       }
     ],
     "max-len": ["error", { "code": 120 }],
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": ["error", { "props": false }],
+    "@typescript-eslint/no-explicit-any": ["off"]
   }
 }

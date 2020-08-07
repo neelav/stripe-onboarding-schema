@@ -1,3 +1,4 @@
+import Stripe from 'stripe';
 import DefaultEntityRegistry from '../../schemas/DefaultEntityRegistry';
 import OnboardingSchema from '../OnboardingSchema';
 import { notEmpty } from '../../util/util';
@@ -22,18 +23,22 @@ test('basic schema', () => {
     RequirementsType.PAST_DUE,
   );
 
-  expect(schema).toEqual(new OnboardingSchema(new Map([
-    [
-      EntityType.ACCOUNT,
-      [
-        new Requirement(
-          'business_type',
+  expect(schema).toEqual(
+    new OnboardingSchema(
+      new Map([
+        [
           EntityType.ACCOUNT,
-          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
-        ),
-      ],
-    ],
-  ])));
+          [
+            new Requirement(
+              'business_type',
+              EntityType.ACCOUNT,
+              notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+            ),
+          ],
+        ],
+      ]),
+    ),
+  );
 });
 
 test('unknown field', () => {
@@ -52,22 +57,23 @@ test('unknown field', () => {
     RequirementsType.PAST_DUE,
   );
 
-  expect(schema).toEqual(new OnboardingSchema(new Map([
-    [
-      EntityType.ACCOUNT,
-      [
-        new Requirement(
-          'business_type',
+  expect(schema).toEqual(
+    new OnboardingSchema(
+      new Map([
+        [
           EntityType.ACCOUNT,
-          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
-        ),
-      ],
-    ],
-    [
-      EntityType.UNKNOWN,
-      [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'))],
-    ],
-  ])));
+          [
+            new Requirement(
+              'business_type',
+              EntityType.ACCOUNT,
+              notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+            ),
+          ],
+        ],
+        [EntityType.UNKNOWN, [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'))]],
+      ]),
+    ),
+  );
 });
 
 test('setValue', () => {
@@ -86,7 +92,7 @@ test('setValue', () => {
     RequirementsType.PAST_DUE,
   );
 
-  const container = {};
+  const container = {} as Stripe.Account;
   RequirementsConverter.setValue(Array.from(schema.fieldMap.values())[0][0].field, container, 'company');
   expect(container).toEqual({ business_type: 'company' });
 });
@@ -107,7 +113,7 @@ test('getValue', () => {
     RequirementsType.PAST_DUE,
   );
 
-  const container = { business_type: 'company' };
+  const container = { business_type: 'company' } as Stripe.Account;
   const value = RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
   expect(value).toEqual('company');
 });
@@ -128,7 +134,7 @@ test('getValue on unset field', () => {
     RequirementsType.PAST_DUE,
   );
 
-  const container = {};
+  const container = {} as Stripe.Account;
   const value = RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
   expect(value).toBeUndefined();
 });

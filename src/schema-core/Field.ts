@@ -3,7 +3,7 @@ import FieldType from './fieldtypes/FieldType';
 import EnumAttributes from './fieldtypes/EnumAttributes';
 import TextAttributes from './fieldtypes/TextAttributes';
 
-type Container = Stripe.Account | Stripe.Person | unknown;
+export type Container = Stripe.Account | Stripe.Person;
 type Attributes = EnumAttributes | TextAttributes;
 
 class Field<C extends Container, V> {
@@ -45,15 +45,15 @@ class Field<C extends Container, V> {
   };
 
   private static EMPTY_GETTER = () => {
-    // do nothing
+    throw new Error('error');
   };
 
   /**
    * Use this method when you want to advertise to the UI that the particular id could not be
    * resolved to a "real" field.
    */
-  static unknown(id: string): Field<unknown, unknown> {
-    return new Field<unknown, unknown>(
+  static unknown(id: string): Field<any, any> {
+    return new Field<any, any>(
       id,
       'Unknown',
       'field id is not in the schema',
