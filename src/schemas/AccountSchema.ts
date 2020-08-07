@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Stripe from 'stripe';
 import Entity from '../schema-core/Entity';
 import Field from '../schema-core/Field';
@@ -20,6 +21,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { product_description: value } });
       },
+      (container) => container.business_profile?.product_description,
       new TextAttributes(TextType.LONG),
     ),
     new Field<Stripe.Account, Stripe.Address>(
@@ -30,6 +32,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { support_address: value } });
       },
+      (container) => container.business_profile?.support_address,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_email',
@@ -39,6 +42,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { support_email: value } });
       },
+      (container) => container.business_profile?.support_email,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_phone',
@@ -48,6 +52,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { support_phone: value } });
       },
+      (container) => container.business_profile?.support_phone,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_url',
@@ -57,6 +62,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { support_url: value } });
       },
+      (container) => container.business_profile?.support_url,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.url',
@@ -66,6 +72,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_profile: { url: value } });
       },
+      (container) => container.business_profile?.url,
     ),
     new Field<Stripe.Account, Stripe.Account.BusinessType>(
       'business_type',
@@ -75,6 +82,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       (container, value) => {
         Object.assign(container, { business_type: value });
       },
+      (container) => container.business_type,
       new EnumAttributes([
         { value: 'company', label: 'Company' },
         { value: 'government_entity', label: 'Government Entity' },
