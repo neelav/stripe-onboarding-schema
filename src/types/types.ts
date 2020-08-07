@@ -1,36 +1,36 @@
 import Field from '../schema-core/Field';
 
 export enum EntityType {
-    ACCOUNT = 'ACCOUNT',
-    UNKNOWN = 'UNKNOWN'
+  ACCOUNT = 'ACCOUNT',
+  UNKNOWN = 'UNKNOWN',
 }
 
 export enum RequirementsType {
-    PAST_DUE = 'past_due',
-    CURRENTLY_DUE = 'currently_due',
-    EVENTUALLY_DUE = 'eventually_due',
+  PAST_DUE = 'past_due',
+  CURRENTLY_DUE = 'currently_due',
+  EVENTUALLY_DUE = 'eventually_due',
 }
 
 export enum Country {
-    US = 'US',
-    CA = 'CA',
-    GB = 'GB',
-    FR = 'FR',
+  US = 'US',
+  CA = 'CA',
+  GB = 'GB',
+  FR = 'FR',
 }
 
 export class Requirement {
-    readonly requirementId: string;
+  readonly requirementId: string;
 
-    readonly entityType: EntityType;
+  readonly entityType: EntityType;
 
-    readonly entityToken?: string;
+  readonly entityToken?: string;
 
-    readonly field: Field<unknown>;
+  readonly field: Field<unknown, unknown>;
 
-    constructor(requirementId: string, entityType: EntityType, field: Field<unknown>, entityToken?: string) {
-      this.requirementId = requirementId;
-      this.entityType = entityType;
-      this.field = field;
-      this.entityToken = entityToken;
-    }
+  constructor(requirementId: string, entityType: EntityType, field: Field<unknown, unknown>, entityToken?: string) {
+    this.requirementId = requirementId;
+    this.entityType = entityType;
+    this.field = field;
+    this.entityToken = entityToken;
+  }
 }

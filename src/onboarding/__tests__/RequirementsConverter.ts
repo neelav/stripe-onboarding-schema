@@ -69,3 +69,24 @@ test('unknown field', () => {
     ],
   ])));
 });
+
+test('setValue', () => {
+  const registry = DefaultEntityRegistry.make();
+  const converter = new RequirementsConverter(registry);
+  const schema = converter.convertRequirements(
+    {
+      past_due: ['business_type'],
+      currently_due: ['business_type'],
+      eventually_due: ['business_type'],
+      pending_verification: [],
+      errors: [],
+      current_deadline: null,
+      disabled_reason: 'past_due',
+    },
+    RequirementsType.PAST_DUE,
+  );
+
+  const container = {};
+  RequirementsConverter.setValue(Array.from(schema.fieldMap.values())[0][0].field, container, 'company');
+  expect(container).toEqual({ business_type: 'company' });
+});
