@@ -13,7 +13,8 @@ const AccountSchema = new Entity(
     new Field(
       'business_profile.product_description',
       'Product Description',
-      'Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.',
+      'Internal-only description of the product sold by, or service provided by, the business.'
+         + ' Used by Stripe for risk and underwriting purposes.',
       FieldType.TEXT,
       new TextAttributes(TextType.LONG),
     ),

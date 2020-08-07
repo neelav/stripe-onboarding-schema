@@ -9,7 +9,7 @@ import { EntityType } from '../types/types';
  */
 class DefaultEntityRegistry extends EntityRegistry<EntityType> {
   public static make(): DefaultEntityRegistry {
-    return new EntityRegistry<EntityType>(new Map<EntityType, Entity>([
+    return new EntityRegistry<EntityType>(new Map<EntityType, Entity<unknown>>([
       [EntityType.ACCOUNT, AccountSchema],
     ]));
   }

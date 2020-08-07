@@ -25,7 +25,13 @@ test('basic schema', () => {
   expect(schema).toEqual(new OnboardingSchema(new Map([
     [
       EntityType.ACCOUNT,
-      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+      [
+        new Requirement(
+          'business_type',
+          EntityType.ACCOUNT,
+          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+        ),
+      ],
     ],
   ])));
 });
@@ -49,7 +55,13 @@ test('unknown field', () => {
   expect(schema).toEqual(new OnboardingSchema(new Map([
     [
       EntityType.ACCOUNT,
-      [new Requirement('business_type', EntityType.ACCOUNT, notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')))],
+      [
+        new Requirement(
+          'business_type',
+          EntityType.ACCOUNT,
+          notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+        ),
+      ],
     ],
     [
       EntityType.UNKNOWN,

@@ -25,9 +25,9 @@ export class Requirement {
 
     readonly entityToken?: string;
 
-    readonly field: Field;
+    readonly field: Field<unknown>;
 
-    constructor(requirementId: string, entityType: EntityType, field: Field, entityToken?: string) {
+    constructor(requirementId: string, entityType: EntityType, field: Field<unknown>, entityToken?: string) {
       this.requirementId = requirementId;
       this.entityType = entityType;
       this.field = field;
