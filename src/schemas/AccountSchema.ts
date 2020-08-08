@@ -15,11 +15,14 @@ const AccountSchema = new Entity<Stripe.Account>(
     new Field<Stripe.Account, string>(
       'business_profile.product_description',
       'Product Description',
-      'Internal-only description of the product sold by, or service provided by, the business.'
-         + ' Used by Stripe for risk and underwriting purposes.',
+      'Internal-only description of the product sold by, or service provided by, the business.' +
+        ' Used by Stripe for risk and underwriting purposes.',
       FieldType.TEXT,
       (container, value) => {
-        Object.assign(container, { business_profile: { product_description: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.product_description = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.product_description,
       new TextAttributes(TextType.LONG),
@@ -30,7 +33,10 @@ const AccountSchema = new Entity<Stripe.Account>(
       'A publicly available mailing address for sending support issues to.',
       FieldType.ADDRESS,
       (container, value) => {
-        Object.assign(container, { business_profile: { support_address: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.support_address = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.support_address,
     ),
@@ -40,7 +46,10 @@ const AccountSchema = new Entity<Stripe.Account>(
       'A publicly available email address for sending support issues to.',
       FieldType.EMAIL,
       (container, value) => {
-        Object.assign(container, { business_profile: { support_email: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.support_email = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.support_email,
     ),
@@ -50,7 +59,10 @@ const AccountSchema = new Entity<Stripe.Account>(
       'A publicly available phone number to call with support issues.',
       FieldType.PHONE,
       (container, value) => {
-        Object.assign(container, { business_profile: { support_phone: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.support_phone = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.support_phone,
     ),
@@ -60,7 +72,10 @@ const AccountSchema = new Entity<Stripe.Account>(
       'A publicly available website for handling support issues.',
       FieldType.URL,
       (container, value) => {
-        Object.assign(container, { business_profile: { support_url: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.support_url = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.support_url,
     ),
@@ -70,7 +85,10 @@ const AccountSchema = new Entity<Stripe.Account>(
       'The business’s publicly available website.',
       FieldType.URL,
       (container, value) => {
-        Object.assign(container, { business_profile: { url: value } });
+        const business_profile: Stripe.Account.BusinessProfile =
+          container.business_profile || ({} as Stripe.Account.BusinessProfile);
+        business_profile.url = value;
+        container.business_profile = business_profile;
       },
       (container) => container.business_profile?.url,
     ),
@@ -80,7 +98,7 @@ const AccountSchema = new Entity<Stripe.Account>(
       'The business type.',
       FieldType.ENUM,
       (container, value) => {
-        Object.assign(container, { business_type: value });
+        container.business_type = value;
       },
       (container) => container.business_type,
       new EnumAttributes([
