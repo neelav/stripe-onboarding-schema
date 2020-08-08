@@ -30,11 +30,11 @@ class RequirementsConverter {
     return new OnboardingSchema(fieldMap);
   }
 
-  static setValue<C extends Container, V>(field: Field<C, V>, container: C, value: V): void {
-    field.setValue(container, value);
+  static async setValue<C extends Container, V>(field: Field<C, V>, container: C, value: V): Promise<C> {
+    return field.setValue(container, value);
   }
 
-  static getValue<C extends Container, V>(field: Field<C, V>, container: C): V | null | undefined {
+  static async getValue<C extends Container, V>(field: Field<C, V>, container: C): Promise<V | null | undefined> {
     return field.getValue(container);
   }
 

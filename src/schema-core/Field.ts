@@ -15,9 +15,9 @@ class Field<C extends Container, V> {
 
   readonly fieldType: FieldType;
 
-  readonly setValue: (container: C, value: V) => void;
+  readonly setValue: (container: C, value: V) => Promise<C>;
 
-  readonly getValue: (container: C) => V | null | undefined;
+  readonly getValue: (container: C) => Promise<V | null | undefined>;
 
   // Attributes specific to this field's type
   readonly attributes?: Attributes;
@@ -27,8 +27,8 @@ class Field<C extends Container, V> {
     name: string,
     description: string,
     fieldType: FieldType,
-    setValue: (container: C, value: V) => void,
-    getValue: (container: C) => V | null | undefined,
+    setValue: (container: C, value: V) => Promise<C>,
+    getValue: (container: C) => Promise<V | null | undefined>,
     attributes?: Attributes,
   ) {
     this.id = id;
@@ -40,9 +40,7 @@ class Field<C extends Container, V> {
     this.attributes = attributes;
   }
 
-  private static EMPTY_SETTER = () => {
-    // do nothing
-  };
+  private static EMPTY_SETTER = () => Promise.resolve();
 
   private static EMPTY_GETTER = () => {
     throw new Error('error');
