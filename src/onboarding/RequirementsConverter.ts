@@ -17,10 +17,14 @@ class RequirementsConverter {
     this.#entityRegistry = entityRegistry;
   }
 
-  convertRequirements(requirements: Stripe.Account.Requirements, include: RequirementsType): OnboardingSchema {
+  convertRequirements(
+    accountToken: string,
+    requirements: Stripe.Account.Requirements,
+    include: RequirementsType,
+  ): OnboardingSchema {
     const desiredRequirements = requirements[include];
 
-    const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(r));
+    const requiredFields = (desiredRequirements || []).map((r) => this.convertRequirement(accountToken, r));
     const fieldMap = requiredFields.reduce((map: Map<EntityType, Requirement[]>, requirement: Requirement) => {
       const list = map.get(requirement.entityType) || [];
       map.set(requirement.entityType, list);
@@ -38,7 +42,7 @@ class RequirementsConverter {
     return field.getValue(container);
   }
 
-  private convertRequirement(requirementId: string): Requirement {
+  private convertRequirement(accountToken: string, requirementId: string): Requirement {
     let entityToken: string | undefined = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
     let entityName: EntityType | undefined;
     if (entityToken) {
@@ -49,7 +53,7 @@ class RequirementsConverter {
     const defaultedEntityName = entityName || RequirementsConverter.DEFAULT_ENTITY;
     const field = this.#entityRegistry.lookupField(defaultedEntityName, fieldId);
 
-    entityToken = entityName ? entityToken : undefined;
+    entityToken = entityName ? entityToken : accountToken;
     return field
       ? new Requirement(requirementId, defaultedEntityName, field, entityToken)
       : new Requirement(requirementId, EntityType.UNKNOWN, Field.unknown(requirementId));

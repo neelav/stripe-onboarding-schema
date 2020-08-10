@@ -40,18 +40,16 @@ class Field<C extends Container, V> {
     this.attributes = attributes;
   }
 
-  private static EMPTY_SETTER = () => Promise.resolve();
+  private static EMPTY_SETTER = (container: any) => Promise.resolve(container);
 
-  private static EMPTY_GETTER = () => {
-    throw new Error('error');
-  };
+  private static EMPTY_GETTER = () => Promise.resolve(undefined);
 
   /**
    * Use this method when you want to advertise to the UI that the particular id could not be
    * resolved to a "real" field.
    */
-  static unknown(id: string): Field<any, any> {
-    return new Field<any, any>(
+  static unknown(id: string): Field<any, undefined> {
+    return new Field<any, undefined>(
       id,
       'Unknown',
       'field id is not in the schema',

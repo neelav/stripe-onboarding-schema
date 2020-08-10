@@ -11,6 +11,7 @@ test('basic schema', () => {
   const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
+    'acct_123abc',
     {
       past_due: ['business_type'],
       currently_due: ['business_type'],
@@ -33,6 +34,7 @@ test('basic schema', () => {
               'business_type',
               EntityType.ACCOUNT,
               notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+              'acct_123abc',
             ),
           ],
         ],
@@ -45,6 +47,7 @@ test('unknown field', () => {
   const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
+    'acct_123abc',
     {
       past_due: ['business_type', 'unknown_field'],
       currently_due: ['business_type', 'unknown_field'],
@@ -67,6 +70,7 @@ test('unknown field', () => {
               'business_type',
               EntityType.ACCOUNT,
               notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+              'acct_123abc',
             ),
           ],
         ],
@@ -80,6 +84,7 @@ test('setValue', () => {
   const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
+    'acct_123abc',
     {
       past_due: ['business_type'],
       currently_due: ['business_type'],
@@ -101,6 +106,7 @@ test('getValue', async () => {
   const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
+    'acct_123abc',
     {
       past_due: ['business_type'],
       currently_due: ['business_type'],
@@ -122,6 +128,7 @@ test('getValue on unset field', async () => {
   const registry = DefaultEntityRegistry.make();
   const converter = new RequirementsConverter(registry);
   const schema = converter.convertRequirements(
+    'acct_123abc',
     {
       past_due: ['business_type'],
       currently_due: ['business_type'],
