@@ -13,9 +13,9 @@ test('basic schema', () => {
   const schema = converter.convertRequirements(
     'acct_123abc',
     {
-      past_due: ['business_type'],
-      currently_due: ['business_type'],
-      eventually_due: ['business_type'],
+      past_due: ['business_type', 'relationship.representative'],
+      currently_due: ['business_type', 'relationship.representative'],
+      eventually_due: ['business_type', 'relationship.representative'],
       pending_verification: [],
       errors: [],
       current_deadline: null,
@@ -33,8 +33,18 @@ test('basic schema', () => {
             new Requirement(
               'business_type',
               EntityType.ACCOUNT,
-              notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+              notEmpty(registry.lookupFieldOrBundle(EntityType.ACCOUNT, 'business_type')),
               'acct_123abc',
+            ),
+          ],
+        ],
+        [
+          EntityType.PERSON,
+          [
+            new Requirement(
+              'relationship.representative',
+              EntityType.PERSON,
+              notEmpty(registry.lookupFieldOrBundle(EntityType.PERSON, 'representative')),
             ),
           ],
         ],
@@ -69,7 +79,7 @@ test('unknown field', () => {
             new Requirement(
               'business_type',
               EntityType.ACCOUNT,
-              notEmpty(registry.lookupField(EntityType.ACCOUNT, 'business_type')),
+              notEmpty(registry.lookupFieldOrBundle(EntityType.ACCOUNT, 'business_type')),
               'acct_123abc',
             ),
           ],
@@ -101,7 +111,8 @@ test('setValue', () => {
   );
 
   const container = {} as Stripe.Account;
-  RequirementsConverter.setValue(Array.from(schema.fieldMap.values())[0][0].field, container, 'company');
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  RequirementsConverter.setValue(field, container, 'company');
   expect(container).toEqual({ business_type: 'company' });
 });
 
@@ -123,7 +134,8 @@ test('getValue', () => {
   );
 
   const container = { business_type: 'company' } as Stripe.Account;
-  const value = RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  const value = RequirementsConverter.getValue(field, container);
   expect(value).toEqual('company');
 });
 
@@ -145,6 +157,7 @@ test('getValue on unset field', async () => {
   );
 
   const container = {} as Stripe.Account;
-  const value = await RequirementsConverter.getValue(Array.from(schema.fieldMap.values())[0][0].field, container);
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  const value = await RequirementsConverter.getValue(field, container);
   expect(value).toBeUndefined();
 });

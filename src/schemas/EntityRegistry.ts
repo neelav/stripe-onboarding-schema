@@ -1,5 +1,4 @@
-import Field from '../schema-core/Field';
-import Entity from '../schema-core/Entity';
+import Entity, { FieldOrBundle } from '../schema-core/Entity';
 import { notEmpty } from '../util/util';
 
 /**
@@ -10,12 +9,20 @@ class EntityRegistry<E> {
 
   readonly #entityLookupByPrefix: Map<string, Entity<any>>;
 
+  readonly #entityLookupByAlternatePrefix: Map<string, Entity<any>>;
+
   constructor(entityLookup: Map<E, Entity<any>>) {
     EntityRegistry.validate(Array.from(entityLookup.values()));
     this.#entityLookup = entityLookup;
 
     this.#entityLookupByPrefix = new Map(
       Array.from(entityLookup.values()).map((entity) => [entity.entityPrefix, entity]),
+    );
+
+    this.#entityLookupByAlternatePrefix = new Map(
+      Array.from(entityLookup.values())
+        .filter((e) => e.alternateRequirementPrefix)
+        .map((entity) => [notEmpty(entity.alternateRequirementPrefix), entity]),
     );
   }
 
@@ -35,13 +42,11 @@ class EntityRegistry<E> {
 
   /**
    *
-   * @param token A valid stripe token (e.g. person_123abc) or a placeholder value used to denote
-   * a new entity needs to be created.
+   * @param token A stripe token (e.g. person_123abc)
    */
   lookupEntityByToken(token: string): E | undefined {
     const prefix = token.split('_')[0];
     const entity = this.#entityLookupByPrefix.get(prefix);
-
     if (!entity) {
       return undefined;
     }
@@ -49,7 +54,20 @@ class EntityRegistry<E> {
     return notEmpty(Array.from(this.#entityLookup.entries()).find((pair) => pair[1] === entity))[0];
   }
 
-  lookupField(entityName: E, fieldId: string): Field<any, any> | undefined {
+  /**
+   * @param prefix A placeholder value used to denote a new entity needs to be created. See PersonSchema for
+   * an example.
+   */
+  lookupEntityByAlternatePrefix(prefix: string): E | undefined {
+    const entity = this.#entityLookupByAlternatePrefix.get(prefix);
+    if (!entity) {
+      return undefined;
+    }
+
+    return notEmpty(Array.from(this.#entityLookup.entries()).find((pair) => pair[1] === entity))[0];
+  }
+
+  lookupFieldOrBundle(entityName: E, fieldId: string): FieldOrBundle<any> | undefined {
     const entity = this.#entityLookup.get(entityName);
     if (!entity) {
       return undefined;

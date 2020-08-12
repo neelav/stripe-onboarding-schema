@@ -1,7 +1,8 @@
-import Field from '../schema-core/Field';
+import { FieldOrBundle } from '../schema-core/Entity';
 
 export enum EntityType {
   ACCOUNT = 'ACCOUNT',
+  PERSON = 'PERSON',
   UNKNOWN = 'UNKNOWN',
 }
 
@@ -23,12 +24,11 @@ export class Requirement {
 
   readonly entityType: EntityType;
 
-  // can be a proper token or a placeholder value
-  readonly entityToken: string;
+  readonly entityToken?: string;
 
-  readonly field: Field<any, any>;
+  readonly field: FieldOrBundle<any>;
 
-  constructor(requirementId: string, entityType: EntityType, field: Field<any, any>, entityToken: string) {
+  constructor(requirementId: string, entityType: EntityType, field: FieldOrBundle<any>, entityToken?: string) {
     this.requirementId = requirementId;
     this.entityType = entityType;
     this.field = field;
