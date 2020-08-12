@@ -16,6 +16,6 @@ describe('DefaultEntityRegistry', () => {
 
   test('lookupEntityByToken', () => {
     const registry = DefaultEntityRegistry.make();
-    expect(registry.lookupEntityByToken('person_123')).toBeUndefined();
+    expect(registry.lookupEntityByToken('person_123')).toBe(EntityType.PERSON);
   });
 });

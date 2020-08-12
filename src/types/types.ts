@@ -2,6 +2,7 @@ import Field from '../schema-core/Field';
 
 export enum EntityType {
   ACCOUNT = 'ACCOUNT',
+  PERSON = 'PERSON',
   UNKNOWN = 'UNKNOWN',
 }
 

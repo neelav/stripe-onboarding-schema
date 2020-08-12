@@ -14,12 +14,22 @@ class Entity<T extends Container> {
 
   readonly fields: Field<T, any>[];
 
-  constructor(id: string, name: string, description: string, entityPrefix: string, fields: Field<T, any>[]) {
+  readonly alternateRequirementPrefix?: string;
+
+  constructor(
+    id: string,
+    name: string,
+    description: string,
+    entityPrefix: string,
+    fields: Field<T, any>[],
+    alternateRequirementPrefix?: string,
+  ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.entityPrefix = entityPrefix;
     this.fields = fields;
+    this.alternateRequirementPrefix = alternateRequirementPrefix;
   }
 }
 
