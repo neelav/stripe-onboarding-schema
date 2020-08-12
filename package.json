@@ -1,6 +1,6 @@
 {
   "name": "stripe-onboarding-schema",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "Schema definition that maps Stripe requirements to a UI schema",
   "scripts": {
     "lint": "eslint . --ext .ts",
