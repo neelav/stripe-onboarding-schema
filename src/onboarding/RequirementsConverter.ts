@@ -39,7 +39,7 @@ class RequirementsConverter {
     return field.setValue(container, value);
   }
 
-  static async getValue<C extends Container, V>(field: Field<C, V>, container: C): Promise<V | null | undefined> {
+  static getValue<C extends Container, V>(field: Field<C, V>, container: C): V | null | undefined {
     return field.getValue(container);
   }
 

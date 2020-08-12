@@ -25,7 +25,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.product_description),
+      (container) => container.business_profile?.product_description,
       new TextAttributes(TextType.LONG),
     ),
     new Field<Stripe.Account, Stripe.Address>(
@@ -40,7 +40,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.support_address),
+      (container) => container.business_profile?.support_address,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_email',
@@ -54,7 +54,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.support_email),
+      (container) => container.business_profile?.support_email,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_phone',
@@ -68,7 +68,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.support_phone),
+      (container) => container.business_profile?.support_phone,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.support_url',
@@ -82,7 +82,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.support_url),
+      (container) => container.business_profile?.support_url,
     ),
     new Field<Stripe.Account, string>(
       'business_profile.url',
@@ -96,7 +96,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_profile = business_profile;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_profile?.url),
+      (container) => container.business_profile?.url,
     ),
     new Field<Stripe.Account, Stripe.Account.BusinessType>(
       'business_type',
@@ -107,7 +107,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         container.business_type = value;
         return Promise.resolve(container);
       },
-      (container) => Promise.resolve(container.business_type),
+      (container) => container.business_type,
       new EnumAttributes([
         { value: 'company', label: 'Company' },
         { value: 'government_entity', label: 'Government Entity' },

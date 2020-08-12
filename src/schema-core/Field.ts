@@ -17,7 +17,7 @@ class Field<C extends Container, V> {
 
   readonly setValue: (container: C, value: V) => Promise<C>;
 
-  readonly getValue: (container: C) => Promise<V | null | undefined>;
+  readonly getValue: (container: C) => V | null | undefined;
 
   // Attributes specific to this field's type
   readonly attributes?: Attributes;
@@ -28,7 +28,7 @@ class Field<C extends Container, V> {
     description: string,
     fieldType: FieldType,
     setValue: (container: C, value: V) => Promise<C>,
-    getValue: (container: C) => Promise<V | null | undefined>,
+    getValue: (container: C) => V | null | undefined,
     attributes?: Attributes,
   ) {
     this.id = id;
@@ -42,7 +42,7 @@ class Field<C extends Container, V> {
 
   private static EMPTY_SETTER = (container: any) => Promise.resolve(container);
 
-  private static EMPTY_GETTER = () => Promise.resolve(undefined);
+  private static EMPTY_GETTER = () => undefined;
 
   /**
    * Use this method when you want to advertise to the UI that the particular id could not be
