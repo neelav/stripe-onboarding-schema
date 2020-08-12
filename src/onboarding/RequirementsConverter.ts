@@ -3,6 +3,7 @@ import DefaultEntityRegistry from '../schemas/DefaultEntityRegistry';
 import Field, { Container } from '../schema-core/Field';
 import OnboardingSchema from './OnboardingSchema';
 import { RequirementsType, EntityType, Requirement } from '../types/types';
+import { notEmpty } from '../util/util';
 
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be
@@ -43,7 +44,7 @@ class RequirementsConverter {
   }
 
   private convertRequirement(accountToken: string, requirementId: string): Requirement {
-    let entityToken: string | undefined = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
+    const entityToken: string | undefined = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
     let entityName: EntityType | undefined;
     if (entityToken) {
       entityName = this.#entityRegistry.lookupEntityByToken(entityToken);
@@ -53,10 +54,10 @@ class RequirementsConverter {
     const defaultedEntityName = entityName || RequirementsConverter.DEFAULT_ENTITY;
     const field = this.#entityRegistry.lookupField(defaultedEntityName, fieldId);
 
-    entityToken = entityName ? entityToken : accountToken;
+    const notEmptyEntityToken = entityName ? notEmpty(entityToken) : accountToken;
     return field
-      ? new Requirement(requirementId, defaultedEntityName, field, entityToken)
-      : new Requirement(requirementId, EntityType.UNKNOWN, Field.unknown(requirementId));
+      ? new Requirement(requirementId, defaultedEntityName, field, notEmptyEntityToken)
+      : new Requirement(requirementId, EntityType.UNKNOWN, Field.unknown(requirementId), notEmptyEntityToken);
   }
 }
 

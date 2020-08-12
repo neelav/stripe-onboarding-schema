@@ -74,7 +74,10 @@ test('unknown field', () => {
             ),
           ],
         ],
-        [EntityType.UNKNOWN, [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'))]],
+        [
+          EntityType.UNKNOWN,
+          [new Requirement('unknown_field', EntityType.UNKNOWN, Field.unknown('unknown_field'), 'acct_123abc')],
+        ],
       ]),
     ),
   );

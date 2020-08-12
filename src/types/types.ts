@@ -23,11 +23,12 @@ export class Requirement {
 
   readonly entityType: EntityType;
 
-  readonly entityToken?: string;
+  // can be a proper token or a placeholder value
+  readonly entityToken: string;
 
   readonly field: Field<any, any>;
 
-  constructor(requirementId: string, entityType: EntityType, field: Field<any, any>, entityToken?: string) {
+  constructor(requirementId: string, entityType: EntityType, field: Field<any, any>, entityToken: string) {
     this.requirementId = requirementId;
     this.entityType = entityType;
     this.field = field;
