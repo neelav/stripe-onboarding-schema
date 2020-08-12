@@ -4,6 +4,7 @@ import Field from '../schema-core/Field';
 import FieldType from '../schema-core/fieldtypes/FieldType';
 import FieldBundle from '../schema-core/FieldBundle';
 import FieldBundleType from '../schema-core/fieldtypes/FieldBundleType';
+import TextAttributes, { TextType } from '../schema-core/fieldtypes/TextAttributes';
 
 const firstName = new Field<Stripe.Person, string>(
   'first_name',
@@ -15,6 +16,7 @@ const firstName = new Field<Stripe.Person, string>(
     return Promise.resolve(container);
   },
   (container) => container.first_name,
+  new TextAttributes(TextType.SHORT),
 );
 
 const lastName = new Field<Stripe.Person, string>(
@@ -27,6 +29,7 @@ const lastName = new Field<Stripe.Person, string>(
     return Promise.resolve(container);
   },
   (container) => container.last_name,
+  new TextAttributes(TextType.SHORT),
 );
 
 const PersonSchema = new Entity<Stripe.Person>(
