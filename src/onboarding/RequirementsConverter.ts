@@ -3,7 +3,6 @@ import DefaultEntityRegistry from '../schemas/DefaultEntityRegistry';
 import Field, { Container } from '../schema-core/Field';
 import OnboardingSchema from './OnboardingSchema';
 import { RequirementsType, EntityType, Requirement } from '../types/types';
-import { notEmpty } from '../util/util';
 
 /**
  * Given a Stripe Account api response, return a well formed ui schema to be
@@ -46,18 +45,26 @@ class RequirementsConverter {
   private convertRequirement(accountToken: string, requirementId: string): Requirement {
     const entityToken: string | undefined = requirementId.includes('.') ? requirementId.split('.')[0] : undefined;
     let entityName: EntityType | undefined;
+    let alternatePrefixEntityName: EntityType | undefined;
     if (entityToken) {
       entityName = this.#entityRegistry.lookupEntityByToken(entityToken);
+      alternatePrefixEntityName = this.#entityRegistry.lookupEntityByAlternatePrefix(entityToken);
     }
 
-    const fieldId = entityName ? requirementId.substr(requirementId.indexOf('.')) : requirementId;
-    const defaultedEntityName = entityName || RequirementsConverter.DEFAULT_ENTITY;
-    const field = this.#entityRegistry.lookupField(defaultedEntityName, fieldId);
+    const finalEntityName = entityName || alternatePrefixEntityName;
+    const fieldId = finalEntityName ? requirementId.substr(requirementId.indexOf('.') + 1) : requirementId;
+    const defaultedEntityName = finalEntityName || RequirementsConverter.DEFAULT_ENTITY;
+    const field = this.#entityRegistry.lookupFieldOrBundle(defaultedEntityName, fieldId);
 
-    const notEmptyEntityToken = entityName ? notEmpty(entityToken) : accountToken;
+    let validEntityToken;
+    if (entityName) {
+      validEntityToken = entityToken;
+    } else if (!finalEntityName) {
+      validEntityToken = accountToken;
+    }
     return field
-      ? new Requirement(requirementId, defaultedEntityName, field, notEmptyEntityToken)
-      : new Requirement(requirementId, EntityType.UNKNOWN, Field.unknown(requirementId), notEmptyEntityToken);
+      ? new Requirement(requirementId, defaultedEntityName, field, validEntityToken)
+      : new Requirement(requirementId, EntityType.UNKNOWN, Field.unknown(requirementId), validEntityToken);
   }
 }
 

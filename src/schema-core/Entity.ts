@@ -1,9 +1,11 @@
 import Field, { Container } from './Field';
+import FieldBundle from './FieldBundle';
 
+export type FieldOrBundle<C extends Container> = Field<C, any> | FieldBundle<C>;
 /**
  * An Entity corresponds to a Stripe resource.  One can think of it as a database table.
  */
-class Entity<T extends Container> {
+class Entity<C extends Container> {
   readonly id: string;
 
   readonly name: string;
@@ -12,7 +14,7 @@ class Entity<T extends Container> {
 
   readonly entityPrefix: string;
 
-  readonly fields: Field<T, any>[];
+  readonly fields: FieldOrBundle<C>[];
 
   readonly alternateRequirementPrefix?: string;
 
@@ -21,7 +23,7 @@ class Entity<T extends Container> {
     name: string,
     description: string,
     entityPrefix: string,
-    fields: Field<T, any>[],
+    fields: FieldOrBundle<C>[],
     alternateRequirementPrefix?: string,
   ) {
     this.id = id;
