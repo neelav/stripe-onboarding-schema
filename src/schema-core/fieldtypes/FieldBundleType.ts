@@ -1,6 +1,5 @@
 enum FieldBundleType {
-    CONTAINER = 'CONTAINER',
-    // ADDRESS = 'ADDRESS',
+    PLACEHOKDER = 'PLACEHOLDER',
     // EXTERNAL_ACCOUNT = 'EXTERNAL_ACCOUNT'
 }
 

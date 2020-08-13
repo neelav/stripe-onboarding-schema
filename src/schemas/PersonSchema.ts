@@ -5,6 +5,7 @@ import FieldType from '../schema-core/fieldtypes/FieldType';
 import FieldBundle from '../schema-core/FieldBundle';
 import FieldBundleType from '../schema-core/fieldtypes/FieldBundleType';
 import TextAttributes, { TextType } from '../schema-core/fieldtypes/TextAttributes';
+import DateAttributes, { DateType } from '../schema-core/fieldtypes/DateAttributes';
 
 const firstName = new Field<Stripe.Person, string>(
   'first_name',
@@ -62,7 +63,30 @@ const PersonSchema = new Entity<Stripe.Person>(
       },
       (container) => container.phone,
     ),
-    new FieldBundle<Stripe.Person>('representative', FieldBundleType.CONTAINER, [firstName, lastName]),
+    new Field<Stripe.Person, Stripe.Person.Dob>(
+      'dob',
+      'Date of Birth',
+      "The person's date of birth.",
+      FieldType.DATE,
+      (container, value) => {
+        container.dob = value;
+        return Promise.resolve(container);
+      },
+      (container) => container.dob,
+      new DateAttributes(DateType.DATE_OF_BIRTH),
+    ),
+    new Field<Stripe.Person, Stripe.Address>(
+      'address',
+      'Address',
+      "The person's address.",
+      FieldType.ADDRESS,
+      (container, value) => {
+        container.address = value;
+        return Promise.resolve(container);
+      },
+      (container) => container.address,
+    ),
+    new FieldBundle<Stripe.Person>('representative', FieldBundleType.PLACEHOKDER, [firstName, lastName]),
   ],
   'relationship',
 );

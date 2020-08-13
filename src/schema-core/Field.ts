@@ -2,9 +2,10 @@ import Stripe from 'stripe';
 import FieldType from './fieldtypes/FieldType';
 import EnumAttributes from './fieldtypes/EnumAttributes';
 import TextAttributes from './fieldtypes/TextAttributes';
+import DateAttributes from './fieldtypes/DateAttributes';
 
 export type Container = Stripe.Account | Stripe.Person;
-type Attributes = EnumAttributes | TextAttributes;
+type Attributes = EnumAttributes | TextAttributes | DateAttributes;
 
 class Field<C extends Container, V> {
   readonly id: string;
