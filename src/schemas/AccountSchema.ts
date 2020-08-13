@@ -14,6 +14,27 @@ const AccountSchema = new Entity<Stripe.AccountUpdateParams>(
   'acct',
   [
     new AccountField<string>(
+      'business_profile.mcc',
+      'MCC',
+      'The merchant category code for the account. MCCs are used to classify businesses ' +
+        'based on the goods or services they provide.',
+      FieldType.ENUM,
+      (params, value) => {
+        const business_profile: Stripe.AccountUpdateParams.BusinessProfile =
+          params.business_profile || ({} as Stripe.AccountUpdateParams.BusinessProfile);
+        business_profile.mcc = value;
+        params.business_profile = business_profile;
+        return Promise.resolve(params);
+      },
+      (params) => params.business_profile?.mcc,
+      new EnumAttributes([
+        { value: '7623', label: 'A/C, Refrigeration Repair' },
+        { value: '8931', label: 'Accounting/Bookkeeping Services' },
+        { value: '7311', label: 'Advertising Services' },
+        { value: '0763', label: 'Agricultural Cooperative' },
+      ]),
+    ),
+    new AccountField<string>(
       'business_profile.product_description',
       'Product Description',
       'Internal-only description of the product sold by, or service provided by, the business.' +

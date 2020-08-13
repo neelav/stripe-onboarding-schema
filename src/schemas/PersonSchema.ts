@@ -89,6 +89,7 @@ const PersonSchema = new Entity<Stripe.PersonUpdateParams>(
       (params) => params.address,
     ),
     new FieldBundle<Stripe.PersonUpdateParams>('representative', FieldBundleType.PLACEHOKDER, [firstName, lastName]),
+    new FieldBundle<Stripe.PersonUpdateParams>('owner', FieldBundleType.PLACEHOKDER, [firstName, lastName]),
   ],
   'relationship',
 );
