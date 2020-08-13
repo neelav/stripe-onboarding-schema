@@ -6,8 +6,8 @@ import FieldType from '../schema-core/fieldtypes/FieldType';
 import EnumAttributes from '../schema-core/fieldtypes/EnumAttributes';
 import TextAttributes, { TextType } from '../schema-core/fieldtypes/TextAttributes';
 
-class AccountField<T> extends Field<Stripe.AccountUpdateParams, Stripe.Account, T> {}
-const AccountSchema = new Entity<Stripe.Account>(
+class AccountField<T> extends Field<Stripe.AccountUpdateParams, T> {}
+const AccountSchema = new Entity<Stripe.AccountUpdateParams>(
   'account',
   'Account',
   'A stripe account corresponding to /v1/accounts',
@@ -26,7 +26,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) => container.business_profile?.product_description,
+      (params) => params.business_profile?.product_description,
       new TextAttributes(TextType.LONG),
     ),
     new AccountField<Stripe.AccountUpdateParams.BusinessProfile.SupportAddress>(
@@ -41,8 +41,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) =>
-        container.business_profile?.support_address as Stripe.AccountUpdateParams.BusinessProfile.SupportAddress,
+      (params) => params.business_profile?.support_address,
     ),
     new AccountField<string>(
       'business_profile.support_email',
@@ -56,7 +55,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) => container.business_profile?.support_email,
+      (params) => params.business_profile?.support_email,
     ),
     new AccountField<string>(
       'business_profile.support_phone',
@@ -70,7 +69,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) => container.business_profile?.support_phone,
+      (params) => params.business_profile?.support_phone,
     ),
     new AccountField<string>(
       'business_profile.support_url',
@@ -84,7 +83,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) => container.business_profile?.support_url,
+      (params) => params.business_profile?.support_url,
     ),
     new AccountField<string>(
       'business_profile.url',
@@ -98,7 +97,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_profile = business_profile;
         return Promise.resolve(params);
       },
-      (container) => container.business_profile?.url,
+      (params) => params.business_profile?.url,
     ),
     new AccountField<Stripe.Account.BusinessType>(
       'business_type',
@@ -109,7 +108,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.business_type = value;
         return Promise.resolve(params);
       },
-      (container) => container.business_type,
+      (params) => params.business_type,
       new EnumAttributes([
         { value: 'company', label: 'Company' },
         { value: 'government_entity', label: 'Government Entity' },
@@ -129,7 +128,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.company = company;
         return Promise.resolve(params);
       },
-      (container) => container.company?.name,
+      (params) => params.company?.name,
       new TextAttributes(TextType.SHORT),
     ),
     new AccountField<string>(
@@ -144,7 +143,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.company = company;
         return Promise.resolve(params);
       },
-      (container) => container.company?.phone,
+      (params) => params.company?.phone,
     ),
     // new Field<Stripe.Account, string>(
     //   'company.tax_id',
@@ -173,7 +172,7 @@ const AccountSchema = new Entity<Stripe.Account>(
         params.company = company;
         return Promise.resolve(params);
       },
-      (container) => container.company?.address as Stripe.AccountUpdateParams.Company.Address,
+      (params) => params.company?.address,
     ),
   ],
 );

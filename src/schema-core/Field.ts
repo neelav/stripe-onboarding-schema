@@ -8,7 +8,7 @@ export type Params = Stripe.AccountUpdateParams | Stripe.PersonUpdateParams;
 export type Container = Stripe.Account | Stripe.Person;
 type Attributes = EnumAttributes | TextAttributes | DateAttributes;
 
-class Field<P extends Params, C extends Container, V> {
+class Field<P extends Params, V> {
   readonly id: string;
 
   readonly name: string;
@@ -19,7 +19,7 @@ class Field<P extends Params, C extends Container, V> {
 
   readonly setValue: (params: P, value: V) => Promise<P>;
 
-  readonly getValue: (container: C) => V | null | undefined;
+  readonly getValue: (params: P) => V | null | undefined;
 
   // Attributes specific to this field's type
   readonly attributes?: Attributes;
@@ -30,7 +30,7 @@ class Field<P extends Params, C extends Container, V> {
     description: string,
     fieldType: FieldType,
     setValue: (params: P, value: V) => Promise<P>,
-    getValue: (container: C) => V | null | undefined,
+    getValue: (params: P) => V | null | undefined,
     attributes?: Attributes,
   ) {
     this.id = id;
@@ -42,7 +42,7 @@ class Field<P extends Params, C extends Container, V> {
     this.attributes = attributes;
   }
 
-  private static EMPTY_SETTER = (container: any) => Promise.resolve(container);
+  private static EMPTY_SETTER = (params: any) => Promise.resolve(params);
 
   private static EMPTY_GETTER = () => undefined;
 
@@ -50,8 +50,8 @@ class Field<P extends Params, C extends Container, V> {
    * Use this method when you want to advertise to the UI that the particular id could not be
    * resolved to a "real" field.
    */
-  static unknown(id: string): Field<any, any, undefined> {
-    return new Field<any, any, undefined>(
+  static unknown(id: string): Field<any, undefined> {
+    return new Field<any, undefined>(
       id,
       'Unknown',
       'field id is not in the schema',

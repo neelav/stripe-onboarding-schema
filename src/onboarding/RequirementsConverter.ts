@@ -2,7 +2,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 import type Stripe from 'stripe';
 import DefaultEntityRegistry from '../schemas/DefaultEntityRegistry';
-import Field, { Params, Container } from '../schema-core/Field';
+import Field, { Params } from '../schema-core/Field';
 import OnboardingSchema from './OnboardingSchema';
 import { RequirementsType, EntityType, Requirement } from '../types/types';
 
@@ -38,12 +38,12 @@ class RequirementsConverter {
     return new OnboardingSchema(fieldMap);
   }
 
-  static async setValue<P extends Params, V>(field: Field<P, any, V>, params: P, value: V): Promise<P> {
+  static async setValue<P extends Params, V>(field: Field<P, V>, params: P, value: V): Promise<P> {
     return field.setValue(params, value);
   }
 
-  static getValue<C extends Container, V>(field: Field<any, C, V>, container: C): V | null | undefined {
-    return field.getValue(container);
+  static getValue<P extends Params, V>(field: Field<P, V>, params: P): V | null | undefined {
+    return field.getValue(params);
   }
 
   private convertRequirement(accountToken: string, requirementId: string): Requirement {
