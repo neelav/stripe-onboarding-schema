@@ -13,9 +13,19 @@ test('basic schema', () => {
   const schema = converter.convertRequirements(
     'acct_123abc',
     {
-      past_due: ['business_type', 'relationship.representative'],
-      currently_due: ['business_type', 'relationship.representative'],
-      eventually_due: ['business_type', 'relationship.representative'],
+      past_due: ['business_type', 'relationship.representative', 'person_123.address.city', 'person_123.address.line1'],
+      currently_due: [
+        'business_type',
+        'relationship.representative',
+        'person_123.address.city',
+        'person_123.address.line1',
+      ],
+      eventually_due: [
+        'business_type',
+        'relationship.representative',
+        'person_123.address.city',
+        'person_123.address.line1',
+      ],
       pending_verification: [],
       errors: [],
       current_deadline: null,
@@ -45,6 +55,12 @@ test('basic schema', () => {
               'relationship.representative',
               EntityType.PERSON,
               notEmpty(registry.lookupFieldOrBundle(EntityType.PERSON, 'representative')),
+            ),
+            new Requirement(
+              'person_123.address.city',
+              EntityType.PERSON,
+              notEmpty(registry.lookupFieldOrBundle(EntityType.PERSON, 'address')),
+              'person_123',
             ),
           ],
         ],

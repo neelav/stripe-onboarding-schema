@@ -1,3 +1,5 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
 import type Stripe from 'stripe';
 import DefaultEntityRegistry from '../schemas/DefaultEntityRegistry';
 import Field, { Container } from '../schema-core/Field';
@@ -28,7 +30,9 @@ class RequirementsConverter {
     const fieldMap = requiredFields.reduce((map: Map<EntityType, Requirement[]>, requirement: Requirement) => {
       const list = map.get(requirement.entityType) || [];
       map.set(requirement.entityType, list);
-      list.push(requirement);
+      if (!list.find((newRequirement) => newRequirement.field === requirement.field)) {
+        list.push(requirement);
+      }
       return map;
     }, new Map<EntityType, Requirement[]>());
     return new OnboardingSchema(fieldMap);
@@ -54,7 +58,19 @@ class RequirementsConverter {
     const finalEntityName = entityName || alternatePrefixEntityName;
     const fieldId = finalEntityName ? requirementId.substr(requirementId.indexOf('.') + 1) : requirementId;
     const defaultedEntityName = finalEntityName || RequirementsConverter.DEFAULT_ENTITY;
-    const field = this.#entityRegistry.lookupFieldOrBundle(defaultedEntityName, fieldId);
+    const fieldIdParts = fieldId.split('.');
+    const potentialFieldIds: string[] = [];
+    fieldIdParts.forEach((part) => {
+      const newIdParts = [potentialFieldIds[potentialFieldIds.length - 1], part];
+      const newId = newIdParts.filter((p) => p).join('.');
+      potentialFieldIds.push(newId);
+    });
+
+    const potentialFields = potentialFieldIds.map((id) =>
+      this.#entityRegistry.lookupFieldOrBundle(defaultedEntityName, id),
+    );
+
+    const field = potentialFields.find((f) => f);
 
     let validEntityToken;
     if (entityName) {

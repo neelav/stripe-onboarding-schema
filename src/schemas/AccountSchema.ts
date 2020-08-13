@@ -115,6 +115,19 @@ const AccountSchema = new Entity<Stripe.Account>(
         { value: 'non_profit', label: 'Non Profit' },
       ]),
     ),
+    new Field<Stripe.Account, Stripe.Address>(
+      'company.address',
+      'Address',
+      "The company's primary address.",
+      FieldType.ADDRESS,
+      (container, value) => {
+        const company: Stripe.Account.Company = container.company || ({} as Stripe.Account.Company);
+        company.address = value;
+        container.company = company;
+        return Promise.resolve(container);
+      },
+      (container) => container.company?.address,
+    ),
   ],
 );
 
