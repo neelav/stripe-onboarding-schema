@@ -127,7 +127,7 @@ test('setValue', () => {
   );
 
   const container = {} as Stripe.Account;
-  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any, any>;
   RequirementsConverter.setValue(field, container, 'company');
   expect(container).toEqual({ business_type: 'company' });
 });
@@ -150,7 +150,7 @@ test('getValue', () => {
   );
 
   const container = { business_type: 'company' } as Stripe.Account;
-  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any, any>;
   const value = RequirementsConverter.getValue(field, container);
   expect(value).toEqual('company');
 });
@@ -173,7 +173,7 @@ test('getValue on unset field', async () => {
   );
 
   const container = {} as Stripe.Account;
-  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any>;
+  const field = Array.from(schema.fieldMap.values())[0][0].field as Field<any, any, any>;
   const value = await RequirementsConverter.getValue(field, container);
   expect(value).toBeUndefined();
 });
