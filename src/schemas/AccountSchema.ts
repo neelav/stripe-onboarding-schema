@@ -115,6 +115,48 @@ const AccountSchema = new Entity<Stripe.Account>(
         { value: 'non_profit', label: 'Non Profit' },
       ]),
     ),
+    new Field<Stripe.Account, string>(
+      'company.name',
+      'Name',
+      'The company’s legal name.',
+      FieldType.TEXT,
+      (container, value) => {
+        const company: Stripe.Account.Company = container.company || ({} as Stripe.Account.Company);
+        company.name = value;
+        container.company = company;
+        return Promise.resolve(container);
+      },
+      (container) => container.company?.name,
+      new TextAttributes(TextType.SHORT),
+    ),
+    new Field<Stripe.Account, string>(
+      'company.phone',
+      'Phone Number',
+      'The company’s phone number (used for verification).',
+      FieldType.PHONE,
+      (container, value) => {
+        const company: Stripe.Account.Company = container.company || ({} as Stripe.Account.Company);
+        company.phone = value;
+        container.company = company;
+        return Promise.resolve(container);
+      },
+      (container) => container.company?.phone,
+    ),
+    // new Field<Stripe.Account, string>(
+    //   'company.tax_id',
+    //   'Tax ID',
+    //   'The business ID number of the company, as appropriate for the company’s ' +
+    //     'country. (Examples are an Employer ID Number in the U.S., a Business Number ' +
+    //     'in Canada, or a Company Number in the UK.)',
+    //   FieldType.ID_NUMBER,
+    //   (container, value) => {
+    //     const company: Stripe.Account.Company = container.company || ({} as Stripe.Account.Company);
+    //     company.tax_id_provided = value;
+    //     container.company = company;
+    //     return Promise.resolve(container);
+    //   },
+    //   (container) => container.company?.phone,
+    // ),
     new Field<Stripe.Account, Stripe.Address>(
       'company.address',
       'Address',
