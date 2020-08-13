@@ -145,21 +145,22 @@ const AccountSchema = new Entity<Stripe.AccountUpdateParams>(
       },
       (params) => params.company?.phone,
     ),
-    // new Field<Stripe.Account, string>(
-    //   'company.tax_id',
-    //   'Tax ID',
-    //   'The business ID number of the company, as appropriate for the company’s ' +
-    //     'country. (Examples are an Employer ID Number in the U.S., a Business Number ' +
-    //     'in Canada, or a Company Number in the UK.)',
-    //   FieldType.ID_NUMBER,
-    //   (container, value) => {
-    //     const company: Stripe.Account.Company = container.company || ({} as Stripe.Account.Company);
-    //     company.tax_id_provided = value;
-    //     container.company = company;
-    //     return Promise.resolve(container);
-    //   },
-    //   (container) => container.company?.phone,
-    // ),
+    new AccountField<string>(
+      'company.tax_id',
+      'Tax ID',
+      'The business ID number of the company, as appropriate for the company’s ' +
+        'country. (Examples are an Employer ID Number in the U.S., a Business Number ' +
+        'in Canada, or a Company Number in the UK.)',
+      FieldType.ID_NUMBER,
+      (container, value) => {
+        const company: Stripe.AccountUpdateParams.Company =
+          container.company || ({} as Stripe.AccountUpdateParams.Company);
+        company.tax_id = value;
+        container.company = company;
+        return Promise.resolve(container);
+      },
+      (container) => container.company?.tax_id,
+    ),
     new AccountField<Stripe.AccountUpdateParams.Company.Address>(
       'company.address',
       'Address',
