@@ -4,10 +4,11 @@ import EnumAttributes from './fieldtypes/EnumAttributes';
 import TextAttributes from './fieldtypes/TextAttributes';
 import DateAttributes from './fieldtypes/DateAttributes';
 
+export type Params = Stripe.AccountUpdateParams | Stripe.PersonUpdateParams;
 export type Container = Stripe.Account | Stripe.Person;
 type Attributes = EnumAttributes | TextAttributes | DateAttributes;
 
-class Field<C extends Container, V> {
+class Field<P extends Params, V> {
   readonly id: string;
 
   readonly name: string;
@@ -16,9 +17,9 @@ class Field<C extends Container, V> {
 
   readonly fieldType: FieldType;
 
-  readonly setValue: (container: C, value: V) => Promise<C>;
+  readonly setValue: (params: P, value: V) => Promise<P>;
 
-  readonly getValue: (container: C) => V | null | undefined;
+  readonly getValue: (params: P) => V | null | undefined;
 
   // Attributes specific to this field's type
   readonly attributes?: Attributes;
@@ -28,8 +29,8 @@ class Field<C extends Container, V> {
     name: string,
     description: string,
     fieldType: FieldType,
-    setValue: (container: C, value: V) => Promise<C>,
-    getValue: (container: C) => V | null | undefined,
+    setValue: (params: P, value: V) => Promise<P>,
+    getValue: (params: P) => V | null | undefined,
     attributes?: Attributes,
   ) {
     this.id = id;
@@ -41,7 +42,7 @@ class Field<C extends Container, V> {
     this.attributes = attributes;
   }
 
-  private static EMPTY_SETTER = (container: any) => Promise.resolve(container);
+  private static EMPTY_SETTER = (params: any) => Promise.resolve(params);
 
   private static EMPTY_GETTER = () => undefined;
 
