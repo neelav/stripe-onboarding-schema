@@ -7,33 +7,35 @@ import FieldBundleType from '../schema-core/fieldtypes/FieldBundleType';
 import TextAttributes, { TextType } from '../schema-core/fieldtypes/TextAttributes';
 import DateAttributes, { DateType } from '../schema-core/fieldtypes/DateAttributes';
 
-const firstName = new Field<Stripe.Person, string>(
+class PersonField<T> extends Field<Stripe.PersonUpdateParams, T> {}
+
+const firstName = new PersonField<string>(
   'first_name',
   'First Name',
   "The person's first name.",
   FieldType.TEXT,
-  (container, value) => {
-    container.first_name = value;
-    return Promise.resolve(container);
+  (params, value) => {
+    params.first_name = value;
+    return Promise.resolve(params);
   },
-  (container) => container.first_name,
+  (params) => params.first_name,
   new TextAttributes(TextType.SHORT),
 );
 
-const lastName = new Field<Stripe.Person, string>(
+const lastName = new PersonField<string>(
   'last_name',
   'Last Name',
   "The person's last name.",
   FieldType.TEXT,
-  (container, value) => {
-    container.last_name = value;
-    return Promise.resolve(container);
+  (params, value) => {
+    params.last_name = value;
+    return Promise.resolve(params);
   },
-  (container) => container.last_name,
+  (params) => params.last_name,
   new TextAttributes(TextType.SHORT),
 );
 
-const PersonSchema = new Entity<Stripe.Person>(
+const PersonSchema = new Entity<Stripe.PersonUpdateParams>(
   'person',
   'Person',
   'A stripe person corresponding to /v1/persons',
@@ -41,52 +43,52 @@ const PersonSchema = new Entity<Stripe.Person>(
   [
     firstName,
     lastName,
-    new Field<Stripe.Person, string>(
+    new PersonField<string>(
       'email',
       'Email',
       "The person's email address.",
       FieldType.EMAIL,
-      (container, value) => {
-        container.email = value;
-        return Promise.resolve(container);
+      (params, value) => {
+        params.email = value;
+        return Promise.resolve(params);
       },
-      (container) => container.email,
+      (params) => params.email,
     ),
-    new Field<Stripe.Person, string>(
+    new PersonField<string>(
       'phone',
       'Phone Number',
       "The person's phone number.",
       FieldType.PHONE,
-      (container, value) => {
-        container.phone = value;
-        return Promise.resolve(container);
+      (params, value) => {
+        params.phone = value;
+        return Promise.resolve(params);
       },
-      (container) => container.phone,
+      (params) => params.phone,
     ),
-    new Field<Stripe.Person, Stripe.Person.Dob>(
+    new PersonField<Stripe.PersonUpdateParams.Dob>(
       'dob',
       'Date of Birth',
       "The person's date of birth.",
       FieldType.DATE,
-      (container, value) => {
-        container.dob = value;
-        return Promise.resolve(container);
+      (params, value) => {
+        params.dob = value;
+        return Promise.resolve(params);
       },
-      (container) => container.dob,
+      (params) => params.dob,
       new DateAttributes(DateType.DATE_OF_BIRTH),
     ),
-    new Field<Stripe.Person, Stripe.Address>(
+    new PersonField<Stripe.PersonUpdateParams.Address>(
       'address',
       'Address',
       "The person's address.",
       FieldType.ADDRESS,
-      (container, value) => {
-        container.address = value;
-        return Promise.resolve(container);
+      (params, value) => {
+        params.address = value;
+        return Promise.resolve(params);
       },
-      (container) => container.address,
+      (params) => params.address,
     ),
-    new FieldBundle<Stripe.Person>('representative', FieldBundleType.PLACEHOKDER, [firstName, lastName]),
+    new FieldBundle<Stripe.PersonUpdateParams>('representative', FieldBundleType.PLACEHOKDER, [firstName, lastName]),
   ],
   'relationship',
 );

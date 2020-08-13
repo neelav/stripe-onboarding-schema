@@ -8,6 +8,7 @@ enum FieldType {
     PHONE = 'PHONE',
     EMAIL = 'EMAIL',
     DATE = 'DATE',
+    ID_NUMBER = 'ID_NUMBER',
     UNKNOWN = 'UNKNOWN'
 }
 
