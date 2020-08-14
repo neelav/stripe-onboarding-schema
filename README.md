@@ -4,8 +4,8 @@ A library that provides rich opiniated type information about Stripe requirement
 
 ## Usage
 
+[WIP] update once this package is in npm
+
 ## Example
 
-## Also See
-
-https://github.com/neelav/stripe-onboarding-schema-example
+See https://github.com/neelav/stripe-onboarding-schema-example
